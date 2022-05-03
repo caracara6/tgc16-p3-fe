@@ -32,7 +32,6 @@ export async function getAllProducts() {
 }
 
 export async function getProductById(productId) {
-    //search filter here
     let response = await axios.get(process.env.REACT_API_URL + '/products/' + productId);
     return response.data
 }
