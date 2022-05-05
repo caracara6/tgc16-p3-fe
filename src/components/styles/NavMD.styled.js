@@ -6,8 +6,6 @@ export const StyledNavMD = styled.nav`
 width: 100%;
 position: relative;
 
-
-
 `
 
 export const StyledNavList = styled.ul`
@@ -16,7 +14,7 @@ export const StyledNavList = styled.ul`
     justify-content: center!important;
     align-items: center;
     gap: 2rem;
-    margin: 0 2rem;
+    // margin: 0 2rem;
 
 
     .nav__listitem {

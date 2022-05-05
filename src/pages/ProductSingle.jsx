@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Product() {
+function ProductSingle() {
   return (
     <div>Product</div>
   )
 }
 
-export default Product
+export default ProductSingle

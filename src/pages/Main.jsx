@@ -10,7 +10,7 @@ import Login from './Login'
 import Register from './Register'
 import Landing from './Landing'
 import ProductListings from './ProductListings'
-import Product from './Product'
+import ProductSingle from './ProductSingle'
 
 import NavOffCanvas from '../components/NavOffCanvas'
 import SearchModal from '../components/SearchModal'
@@ -38,8 +38,8 @@ function Main() {
                         <Route path="/" element={<Landing />} />
                         <Route path="/account/login" element={<Login />} />
                         <Route path="/account/Register" element={<Register/>}/>
-                        <Route path="/collections/:collectionName" element={<ProductListings/>}/>
-                        <Route path="/account/Register" element={<Product/>}/>
+                        <Route path="/categories/:categoryId" element={<ProductListings/>}/>
+                        <Route path="/categories/:categoryId/:productId" element={<ProductSingle/>}/>
 
 
 

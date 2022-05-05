@@ -23,6 +23,7 @@ function ProductProvider(props) {
     const [producers, setProducers] = useState([]);
     const [grapeVarietals, setGrapeVarietals] = useState([]);
     const [products, setProducts] = useState([]);
+    const [searchInput, setSearchInput] = useState('')
 
     const context = {
 
@@ -53,6 +54,10 @@ function ProductProvider(props) {
         getProductByID: (productId) => {
 			return products.filter(p => p.id === productId)[0];
 		},
+
+        setSearchInput: (searchInput) => {
+            return setSearchInput(searchInput)
+        }
     
     }
 
@@ -81,8 +86,16 @@ function ProductProvider(props) {
 
         fetchAllData()
 
-
     }, [])
+
+    useEffect( () => {
+        const fetchProducts = async () => {
+            let products = await getAllProducts(searchInput);
+            setProducts(products);
+        }
+
+        fetchProducts()
+    }, [searchInput])
 
     return <ProductContext.Provider value={context}>
         {props.children}

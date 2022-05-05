@@ -1,37 +1,51 @@
 import axios from 'axios'
 
+const BASE_API_URL = "http://localhost:8080/api"
+
 export async function getCategories() {
-    let response = await axios.get(process.env.REACT_API_URL + '/categories');
+   
+    let response = await axios.get(BASE_API_URL + '/product-related/categories');
     return response.data
 }
 
 export async function getCountries() {
-    let response = await axios.get(process.env.REACT_API_URL + '/countries');
+    let response = await axios.get(BASE_API_URL + '/product-related/countries');
     return response.data
 }
 
 export async function getRegions() {
-    let response = await axios.get(process.env.REACT_API_URL + '/regions');
+    let response = await axios.get(BASE_API_URL + '/product-related/regions');
     return response.data
 }
 
 export async function getProducers() {
-    let response = await axios.get(process.env.REACT_API_URL + '/producers');
+    let response = await axios.get(BASE_API_URL + '/product-related/producers');
     return response.data
 }
 
 export async function getGrapeVarietals() {
-    let response = await axios.get(process.env.REACT_API_URL + '/grape-varietals');
+    let response = await axios.get(BASE_API_URL + '/product-related/grape-varietals');
     return response.data
 }
 
-export async function getAllProducts() {
+export async function getAllProducts(searchInput) {
     //search filter here
-    let response = await axios.get(process.env.REACT_API_URL + '/products');
-    return response.data
+
+    let payload = {
+        params: {}
+    }
+
+    if(searchInput) {
+        payload = {
+            searchInput
+        }
+    }
+    let responseProducts = await axios.get(BASE_API_URL + '/product-related/products');
+
+    return responseProducts.data
 }
 
 export async function getProductById(productId) {
-    let response = await axios.get(process.env.REACT_API_URL + '/products/' + productId);
+    let response = await axios.get(BASE_API_URL + '/product-related/products/' + productId);
     return response.data
 }

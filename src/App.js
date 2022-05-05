@@ -7,9 +7,12 @@ import Main from "./pages/Main";
 
 import React from 'react'
 
+import GlobalStyles from './components/styles/GlobalStyle'
+
 function App() {
 	return (
 		<>
+		<GlobalStyles />
 		<ProductProvider>
 			<Main />
 		</ProductProvider>
