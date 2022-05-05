@@ -38,8 +38,8 @@ function Main() {
                         <Route path="/" element={<Landing />} />
                         <Route path="/account/login" element={<Login />} />
                         <Route path="/account/Register" element={<Register/>}/>
-                        <Route path="/categories/:categoryId" element={<ProductListings/>}/>
-                        <Route path="/categories/:categoryId/:productId" element={<ProductSingle/>}/>
+                        <Route path="/categories/:categoryFilter" element={<ProductListings/>}/>
+                        <Route path="/categories/:categoryFilter/:productId" element={<ProductSingle/>}/>
 
 
 

@@ -11,6 +11,7 @@ position: relative;
 export const StyledNavList = styled.ul`
     width: 100%;
     display:flex!important;
+    
     justify-content: center!important;
     align-items: center;
     gap: 2rem;
@@ -20,12 +21,14 @@ export const StyledNavList = styled.ul`
     .nav__listitem {
         list-style: none;
         // position: relative;
+        
         padding:1.5rem 1rem;
         cursor: pointer;
 
-        &:hover .nav__listitemdrop, &:focus .nav__listitemdrop{
-            opacity:1;
-            visibility:visible;
+        &:hover .nav__listitemdrop, 
+        &:focus .nav__listitemdrop{
+            opacity: 1;
+            visibility: visible;
         }
 
         &drop{
@@ -37,7 +40,7 @@ export const StyledNavList = styled.ul`
             background-color: #fff;
             padding: 1rem ;
             display: flex;
-            // flex-direction: column;
+            flex-direction: column;
             justify-content: space-around;
             gap:0.5rem;
             opacity: 0;

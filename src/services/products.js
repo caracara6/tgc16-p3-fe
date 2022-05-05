@@ -28,7 +28,7 @@ export async function getGrapeVarietals() {
     return response.data
 }
 
-export async function getAllProducts(searchInput) {
+export async function getAllProducts(searchInput, categoryFilter) {
     //search filter here
 
     let payload = {
@@ -36,16 +36,26 @@ export async function getAllProducts(searchInput) {
     }
 
     if(searchInput) {
-        payload = {
+        payload.params = {
             searchInput
         }
     }
-    let responseProducts = await axios.get(BASE_API_URL + '/product-related/products');
 
+    if(categoryFilter) {
+        payload.params = {
+            categoryFilter: categoryFilter
+        }
+    }
+
+
+    console.log('payload=> ', payload)
+
+    let responseProducts = await axios.get(BASE_API_URL + '/product-related/products', payload);
+    console.log('responseProduct => ', responseProducts.data)
     return responseProducts.data
 }
 
 export async function getProductById(productId) {
-    let response = await axios.get(BASE_API_URL + '/product-related/products/' + productId);
+    let response = await axios.get(BASE_API_URL + '/product-related/products' + productId);
     return response.data
 }
