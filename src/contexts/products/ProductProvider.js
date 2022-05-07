@@ -9,6 +9,7 @@ import {
     getProducers,
     getGrapeVarietals,
     getAllProducts,
+    getProductById
 } from '../../services/products';
 
 
@@ -19,12 +20,15 @@ function ProductProvider(props) {
 
     const [categories, setCategories] = useState([]);
     const [countries, setCountries] = useState([]);
-    const [regions, setRegions] = useState([]);
-    const [producers, setProducers] = useState([]);
-    const [grapeVarietals, setGrapeVarietals] = useState([]);
+    // const [regions, setRegions] = useState([]);
+    // const [producers, setProducers] = useState([]);
+    // const [grapeVarietals, setGrapeVarietals] = useState([]);
     const [products, setProducts] = useState([]);
-    const [searchInput, setSearchInput] = useState('')
-    const [categoryFilter, setCategoryFilter] = useState()
+    const [activeProductId, setActiveProductId] = useState();
+    const [activeProduct, setActiveProduct] = useState({});
+    const [searchInput, setSearchInput] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState();
+    const [loaded, setLoaded] = useState(null);
 
     const context = {
 
@@ -36,71 +40,108 @@ function ProductProvider(props) {
             return countries
         },
 
-        allRegions: () => {
-            return regions
-        },
+        // allRegions: () => {
+        //     return regions
+        // },
 
-        allProducers: () => {
-            return producers
-        },
+        // allProducers: () => {
+        //     return producers
+        // },
 
-        allGrapeVarietals: () => {
-            return grapeVarietals
-        },
+        // allGrapeVarietals: () => {
+        //     return grapeVarietals
+        // },
 
         allProducts: () => {
             return products;
         },
 
-        getProductByID: (productId) => {
-			return products.filter(p => p.id === productId)[0];
-		},
+        getActiveProduct: () => {
+            return activeProduct
+        },
+
+        // getProductByID: (productId) => {
+		// 	return products.filter(p => p.id === productId)[0];
+		// },
+        setActiveProductId: (productId) => {
+            return setActiveProductId(productId)
+        },
+
+        getLoaded: () => {
+            return loaded
+        },
 
         setSearchInput: (searchInput) => {
-            return setSearchInput(searchInput)
+            setLoaded(false);
+            return setSearchInput(searchInput);
         },
 
         setCategoryFilter: (categoryFilter) => {
-            return setCategoryFilter(categoryFilter)
+            console.log('setting loaded false...')
+            setLoaded(false);
+            return setCategoryFilter(categoryFilter);
         }
     
     }
 
     useEffect( () => {
         const fetchAllData = async () => {
+
+            console.log('initial loading ')
             
             let categories = await getCategories();
             setCategories(categories);
 
-            let countries = await getCountries();
-            setCountries(countries);
+            // let countries = await getCountries();
+            // setCountries(countries);
 
-            let regions = await getRegions();
-            setRegions(regions);
+            // let regions = await getRegions();
+            // setRegions(regions);
 
-            let producers = await getProducers();
-            setProducers(producers);
+            // let producers = await getProducers();
+            // setProducers(producers);
 
-            let grapeVarietals = await getGrapeVarietals();
-            setGrapeVarietals(grapeVarietals);
+            // let grapeVarietals = await getGrapeVarietals();
+            // setGrapeVarietals(grapeVarietals);
 
-            let products = await getAllProducts();
-            setProducts(products);
+            // let products = await getAllProducts();
+            // setProducts(products);
+
+            setLoaded(true);
             
         }
 
-        fetchAllData()
+        fetchAllData();
 
     }, [])
 
     useEffect( () => {
         const fetchProducts = async () => {
+            console.log('loaded', loaded)
             let products = await getAllProducts(searchInput, categoryFilter);
             setProducts(products);
+
+            console.log('setting loaded true...')
+
+            setLoaded(true);
+
         }
 
-        fetchProducts()
+        fetchProducts();
     }, [searchInput, categoryFilter])
+
+    useEffect( () => {
+        const fetchActiveProduct = async (activeProductId) => {
+            let activeProduct = await getProductById(activeProductId);
+            setActiveProduct(activeProduct);
+
+            setLoaded(true);
+        }
+
+        fetchActiveProduct(activeProductId);
+    }, [activeProductId])
+
+    
 
     return <ProductContext.Provider value={context}>
         {props.children}

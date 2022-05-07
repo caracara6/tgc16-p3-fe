@@ -7,10 +7,23 @@ import Main from "./pages/Main";
 
 import React from 'react'
 
+import { ThemeProvider } from 'styled-components'
 import GlobalStyles from './components/styles/GlobalStyle'
 
+const theme = {
+	sm: '576px',
+	md: '768px',
+	lg: '992px',
+	xl: '1200px'
+}
+
 function App() {
+
+
 	return (
+		<ThemeProvider theme={theme}>
+
+		
 		<>
 		<GlobalStyles />
 		<ProductProvider>
@@ -18,6 +31,8 @@ function App() {
 		</ProductProvider>
 		
 		</>
+
+		</ThemeProvider>
 	)
 }
 
