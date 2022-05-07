@@ -39,6 +39,37 @@ export function getRefreshToken() {
     return userTokenInfo.refreshToken ? userTokenInfo.refreshToken : null
 }
 
+export async function refreshAccessToken() {
+    let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
+
+    if(userTokenInfo.refreshToken){
+        try{
+            let accessTokenResponse = await axios.post(BASE_API_URL + '/user/refresh', {
+                refreshToken: userTokenInfo.refreshToken
+            })
+
+            return accessTokenResponse.data.accessToken
+        } catch (e) {
+            console.log(e.response.data)
+        }
+        
+    } else {
+        return;
+    }
+}
+
+export function getHttpHeaders() {
+    let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
+
+    let headers = {
+        headers: {
+            Authorization: `Bearer ${userTokenInfo.accessToken}`
+        }
+    }
+
+    return headers
+}
+
 export async function userLogout() {
     try {
 
