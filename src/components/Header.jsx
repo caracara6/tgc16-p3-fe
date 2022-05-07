@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
-// import NavOffCanvas from './NavOffCanvas'
-// import SearchModal from './SearchModal'
+import { Dropdown } from 'react-bootstrap'
+
+import UserContext from '../contexts/users/UserContext'
+
+import NavOffCanvas from './NavOffCanvas'
+import SearchModal from './SearchModal'
 
 
 
 function Header() {
+	let context = useContext(UserContext)
 	return (
 		<React.Fragment>
-
-
 			<div className='d-flex justify-content-between border border-danger'>
 
 				<button className="btn btn-primary d-md-none "
@@ -30,12 +33,25 @@ function Header() {
 				</NavLink>
 
 
-				<div className='border border-danger'>
-					<NavLink to="/account/login" className='d-none d-md-inline'>
-					<button type="button" className="btn btn-primary">
-					Login
-					</button>
+				<div className='border border-danger d-flex'>
+					{context.getLoginStatus() ? <Dropdown>
+						<Dropdown.Toggle id="dropdown-basic" className='btn'>
+							Account
+						</Dropdown.Toggle>
+
+						<Dropdown.Menu>
+							<Dropdown.Item><Link to="/account/profile">Action</Link></Dropdown.Item>
+							<Dropdown.Item as={Link} to="/" onClick={() => {context.userLogout()}} >Logout</Dropdown.Item>
+							
+						</Dropdown.Menu>
+					</Dropdown> : <NavLink to="/account/login" className='d-none d-md-inline'>
+						<button type="button" className="btn btn-primary">
+							Login
+						</button>
 					</NavLink>
+					}
+
+
 					<button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal">
 						Cart
 					</button>
@@ -49,8 +65,8 @@ function Header() {
 			</div>
 
 
-			{/* <NavOffCanvas />
-			<SearchModal /> */}
+			<NavOffCanvas />
+			<SearchModal />
 		</React.Fragment>
 
 	)

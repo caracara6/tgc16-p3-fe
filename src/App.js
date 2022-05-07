@@ -2,6 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import ProductProvider from "./contexts/products/ProductProvider";
+import UserProvider from "./contexts/users/UserProvider";
+
 
 import Main from "./pages/Main";
 
@@ -23,14 +25,16 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 
-		
-		<>
-		<GlobalStyles />
-		<ProductProvider>
-			<Main />
-		</ProductProvider>
-		
-		</>
+
+			<>
+				<GlobalStyles />
+				<UserProvider>
+					<ProductProvider>
+						<Main />
+					</ProductProvider>
+				</UserProvider>
+
+			</>
 
 		</ThemeProvider>
 	)
