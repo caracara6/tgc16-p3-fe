@@ -9,13 +9,14 @@ import {
     getUserInfoFromLocalStorage,
     refreshAccessToken,
     getHttpHeaders,
-    userLogout
+    userLogout,
+    getRefreshToken
 } from '../../services/users'
 
 function UserProvider(props) {
 
-    const [userInfo, setUserInfo] = useState();
-    const [loginStatus, setLoginStatus] = useState(false);
+    let [userInfo, setUserInfo] = useState();
+    let [loginStatus, setLoginStatus] = useState(false);
 
     const context = {
         userLogin: async (email, password) => {
@@ -68,7 +69,22 @@ function UserProvider(props) {
         setUserInfo(userInfo)
     }, [])
 
-    setInterval(refreshAccessToken(), 1000 * 60 * 55)
+    setInterval( () => {
+        try {
+            let accessToken = refreshAccessToken()
+            let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
+
+            userTokenInfo.accessToken = accessToken
+
+            localStorage.removeItem('userTokenInfo')
+            localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
+
+        } catch (e) {
+            localStorage.removeItem('userTokenInfo')
+            localStorage.removeItem('userInfo')
+            console.log(e)
+        }
+    }, 1000 * 60 * 55)
     
     return <UserContext.Provider value={context}>
         {props.children}

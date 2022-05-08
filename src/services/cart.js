@@ -1,8 +1,6 @@
 import axios from 'axios'
-import { getCategories } from './products'
 
 import {
-    getRefreshToken,
     getHttpHeaders
 } from './users'
 

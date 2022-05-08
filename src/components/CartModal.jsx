@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import CartContext from '../contexts/cart/CartContext'
 
 function CartModal() {
+
+	let cartContext = useContext(CartContext)
+	
 	return (
 		<div className="modal fade" id="cartModal" tabIndex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
 			<div className="modal-dialog modal-dialog-centered">

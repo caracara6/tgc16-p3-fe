@@ -3,6 +3,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import ProductProvider from "./contexts/products/ProductProvider";
 import UserProvider from "./contexts/users/UserProvider";
+import CartProvider from "./contexts/cart/CartProvider";
 
 
 import Main from "./pages/Main";
@@ -30,7 +31,9 @@ function App() {
 				<GlobalStyles />
 				<UserProvider>
 					<ProductProvider>
-						<Main />
+						<CartProvider>
+							<Main />
+						</CartProvider>
 					</ProductProvider>
 				</UserProvider>
 
