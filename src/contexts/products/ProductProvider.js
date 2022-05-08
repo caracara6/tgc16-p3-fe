@@ -61,8 +61,8 @@ function ProductProvider(props) {
         },
 
         // getProductByID: (productId) => {
-		// 	return products.filter(p => p.id === productId)[0];
-		// },
+        // 	return products.filter(p => p.id === productId)[0];
+        // },
         setActiveProductId: (productId) => {
             return setActiveProductId(productId)
         },
@@ -81,14 +81,14 @@ function ProductProvider(props) {
             setLoaded(false);
             return setCategoryFilter(categoryFilter);
         }
-    
+
     }
 
-    useEffect( () => {
+    useEffect(() => {
         const fetchAllData = async () => {
 
             console.log('initial loading ')
-            
+
             let categories = await getCategories();
             setCategories(categories);
 
@@ -108,14 +108,14 @@ function ProductProvider(props) {
             // setProducts(products);
 
             setLoaded(true);
-            
+
         }
 
         fetchAllData();
 
     }, [])
 
-    useEffect( () => {
+    useEffect(() => {
         const fetchProducts = async () => {
             console.log('loaded', loaded)
             let products = await getAllProducts(searchInput, categoryFilter);
@@ -130,7 +130,7 @@ function ProductProvider(props) {
         fetchProducts();
     }, [searchInput, categoryFilter])
 
-    useEffect( () => {
+    useEffect(() => {
         const fetchActiveProduct = async (activeProductId) => {
             let activeProduct = await getProductById(activeProductId);
             setActiveProduct(activeProduct);
@@ -138,10 +138,14 @@ function ProductProvider(props) {
             setLoaded(true);
         }
 
-        fetchActiveProduct(activeProductId);
+        if (activeProduct) {
+            fetchActiveProduct(activeProductId)
+        }
+
+
     }, [activeProductId])
 
-    
+
 
     return <ProductContext.Provider value={context}>
         {props.children}

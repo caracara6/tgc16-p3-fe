@@ -3,12 +3,12 @@ import axios from 'axios'
 const BASE_API_URL = "http://localhost:8080/api"
 
 export async function userLogin(email, password) {
-    try{
+    try {
         let userLoginResponse = await axios.post(BASE_API_URL + '/user/login', {
             email,
             password
         })
-        if(userLoginResponse.data.accessToken){
+        if (userLoginResponse.data.accessToken) {
             localStorage.setItem('userTokenInfo', JSON.stringify(userLoginResponse.data))
             console.log(JSON.stringify(userLoginResponse.data))
             return true
@@ -16,7 +16,7 @@ export async function userLogin(email, password) {
     } catch (e) {
         console.log(e.response.data.error)
     }
-    
+
 }
 
 export function getUserTokenInfo() {
@@ -24,7 +24,7 @@ export function getUserTokenInfo() {
 }
 
 export async function getUserInfo(headers) {
-    let userInfoResponse = await axios.get(BASE_API_URL+'/user/profile', {headers: headers})
+    let userInfoResponse = await axios.get(BASE_API_URL + '/user/profile', { headers: headers })
     localStorage.setItem('userInfo', JSON.stringify(userInfoResponse.data))
     return userInfoResponse.data
 }
@@ -42,8 +42,8 @@ export function getRefreshToken() {
 export async function refreshAccessToken() {
     let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
 
-    if(userTokenInfo.refreshToken){
-        try{
+    if (userTokenInfo) {
+        try {
             let accessTokenResponse = await axios.post(BASE_API_URL + '/user/refresh', {
                 refreshToken: userTokenInfo.refreshToken
             })
@@ -52,7 +52,7 @@ export async function refreshAccessToken() {
         } catch (e) {
             console.log(e.response.data)
         }
-        
+
     } else {
         return;
     }
@@ -61,23 +61,28 @@ export async function refreshAccessToken() {
 export function getHttpHeaders() {
     let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
 
-    let headers = {
-        headers: {
+    if(userTokenInfo.accessToken) {
+        let headers = {
             Authorization: `Bearer ${userTokenInfo.accessToken}`
         }
+    
+        return headers
+
+    } else {
+        return null;
     }
 
-    return headers
+    
 }
 
 export async function userLogout() {
     try {
 
         let refreshToken = getRefreshToken()
-        
+
         console.log('logout refresh token', refreshToken)
 
-        await axios.post(BASE_API_URL + '/user/logout', {refreshToken: refreshToken})
+        await axios.post(BASE_API_URL + '/user/logout', { refreshToken: refreshToken })
 
         localStorage.removeItem('userInfo')
         localStorage.removeItem('userTokenInfo')

@@ -7,6 +7,8 @@ import {
     getUserTokenInfo,
     getUserInfo,
     getUserInfoFromLocalStorage,
+    refreshAccessToken,
+    getHttpHeaders,
     userLogout
 } from '../../services/users'
 
@@ -46,9 +48,7 @@ function UserProvider(props) {
             let userTokenInfo = getUserTokenInfo();
             console.log(userTokenInfo)
 
-            let authHeaders = {
-                Authorization: `Bearer ${userTokenInfo.accessToken}`
-            }
+            let authHeaders = getHttpHeaders();
 
             let userInfoResult = await getUserInfo(authHeaders)
             console.log(userInfoResult)
@@ -68,9 +68,8 @@ function UserProvider(props) {
         setUserInfo(userInfo)
     }, [])
 
+    setInterval(refreshAccessToken(), 1000 * 60 * 55)
     
-
-
     return <UserContext.Provider value={context}>
         {props.children}
     </UserContext.Provider>
