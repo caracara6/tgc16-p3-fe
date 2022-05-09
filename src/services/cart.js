@@ -7,13 +7,25 @@ import {
 const BASE_API_URL = "http://localhost:8080/api"
 
 export async function getCart() {
+    
     //call from api OR send withrelated cart_items when getting user profile?
 
-    if(localStorage.getItem('userInfo')) {
+    if(localStorage.getItem('userTokenInfo')) {
+        
         let headers = getHttpHeaders();
         let responseCart = await axios.get(BASE_API_URL + '/cart', {headers: headers})
 
-        return responseCart.data
+        let cartItems = []
+
+        responseCart.data.map( c => {
+            
+            return cartItems.push({
+                product_id: c.product_id,
+                quantity: c.quantity
+            })
+        })
+        
+        return cartItems
     }
 
 }

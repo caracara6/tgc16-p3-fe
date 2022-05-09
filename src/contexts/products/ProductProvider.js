@@ -138,7 +138,7 @@ function ProductProvider(props) {
             setLoaded(true);
         }
 
-        if (activeProduct) {
+        if (activeProductId) {
             fetchActiveProduct(activeProductId)
         }
 

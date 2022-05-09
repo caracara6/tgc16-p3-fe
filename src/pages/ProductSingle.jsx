@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 // import { getProductById } from '../services/products'
 import ProductContext from '../contexts/products/ProductContext'
+import CartContext from '../contexts/cart/CartContext'
+
 import { useParams, Link } from 'react-router-dom'
 
 import styled from 'styled-components'
@@ -8,7 +10,8 @@ import styled from 'styled-components'
 import { Breadcrumb, Accordion } from 'react-bootstrap'
 
 function ProductSingle() {
-	let context = useContext(ProductContext)
+	let productContext = useContext(ProductContext)
+	let cartContext = useContext(CartContext)
 
 	let params = useParams()
 
@@ -17,21 +20,19 @@ function ProductSingle() {
 	let [quantity, setQuantity] = useState(1)
 
 	useEffect(() => {
-		context.setActiveProductId(params.productId)
+		productContext.setActiveProductId(params.productId)
 		setCategoryName(getCategoryName());
 	}, [])
 
 	useEffect(() => {
-		setActiveProduct(context.getActiveProduct())
-	}, [context])
-
-	console.log('activeProduct', activeProduct)
+		setActiveProduct(productContext.getActiveProduct())
+	}, [productContext])
 
 
 	function getCategoryName() {
-		console.log("CategoryId", context.allCategories())
-		let categoryObject = context.allCategories().filter(c => parseInt(params.categoryFilter) === c.id)
-		console.log(categoryObject[0].name)
+		
+		let categoryObject = productContext.allCategories().filter(c => parseInt(params.categoryFilter) === c.id)
+		
 		return categoryObject[0].name
 	}
 
@@ -59,7 +60,7 @@ function ProductSingle() {
 				</Breadcrumb>
 
 				<div className='container-img'>
-					<img src={activeProduct.image_url} />
+					<img src={activeProduct.image_url} alt={activeProduct.name}/>
 				</div>
 				<div className='container-action'>
 					<h2>{activeProduct.name}</h2>
@@ -100,8 +101,8 @@ function ProductSingle() {
 				<div className='container-info'>
 					<p>Vintage: {activeProduct.name ? activeProduct.vintage : ""}</p>
 					<p>Origin: {activeProduct.name ? activeProduct.region.name : ""}, {activeProduct.name ? activeProduct.origin_country.name : ""}</p>
-					<p>Grape Varietals: {activeProduct.name ? activeProduct.grape_varietals.map(g => { return <span>{g.name}, </span> }) : ""}</p>
-					<p>Volume: {activeProduct.name ? activeProduct.sizes.map(s => { return <span>{s.name} - {s.volume}ml</span> }) : ""}</p>
+					<p>Grape Varietals: {activeProduct.name ? activeProduct.grape_varietals.map(g => { return <span key={g.id}>{g.name}, </span> }) : ""}</p>
+					<p>Volume: {activeProduct.name ? activeProduct.sizes.map(s => { return <span key={s.id}>{s.name} - {s.volume}ml</span> }) : ""}</p>
 					<Accordion>
 						<Accordion.Item eventKey="0">
 							<Accordion.Header>Description</Accordion.Header>
@@ -126,7 +127,9 @@ function ProductSingle() {
 							<Accordion.Body>
 								{activeProduct.name ? activeProduct.producer.name : ""}
 								<br />
-								<img src={activeProduct.name ? activeProduct.producer.producer_image_url : ""} />
+								<img src={activeProduct.name ? activeProduct.producer.producer_image_url : ""} 
+									alt={activeProduct.name ? activeProduct.name : ""}
+								/>
 								{activeProduct.name ? activeProduct.producer.description : ""}
 
 							</Accordion.Body>

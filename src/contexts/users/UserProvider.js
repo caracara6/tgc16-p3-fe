@@ -10,7 +10,7 @@ import {
     refreshAccessToken,
     getHttpHeaders,
     userLogout,
-    getRefreshToken
+    
 } from '../../services/users'
 
 function UserProvider(props) {
@@ -46,13 +46,12 @@ function UserProvider(props) {
     useEffect(() => {
 
         const fetchUserData = async () => {
-            let userTokenInfo = getUserTokenInfo();
-            console.log(userTokenInfo)
+            // let userTokenInfo = getUserTokenInfo();
 
             let authHeaders = getHttpHeaders();
 
             let userInfoResult = await getUserInfo(authHeaders)
-            console.log(userInfoResult)
+            
             setUserInfo(userInfoResult)
         }
 
@@ -69,12 +68,15 @@ function UserProvider(props) {
         setUserInfo(userInfo)
     }, [])
 
-    setInterval( () => {
+    setInterval( async() => {
         try {
-            let accessToken = refreshAccessToken()
+            let accessToken = await refreshAccessToken()
+            console.log('access testing', accessToken)
             let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
 
             userTokenInfo.accessToken = accessToken
+
+            // console.log('testing refresh token')
 
             localStorage.removeItem('userTokenInfo')
             localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
@@ -82,6 +84,7 @@ function UserProvider(props) {
         } catch (e) {
             localStorage.removeItem('userTokenInfo')
             localStorage.removeItem('userInfo')
+            setLoginStatus(false)
             console.log(e)
         }
     }, 1000 * 60 * 55)

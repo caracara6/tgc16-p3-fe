@@ -27,46 +27,115 @@ function CartProvider(props) {
             return cartItems
         },
 
-        addToCart: async(productId, quantity) => {
-            try{
-                let responseAddToCart = await addToCart(productId, quantity)
-                return responseAddToCart
-            } catch (e) {
-                console.log(e)
+        addToCart: async (productId, quantity) => {
+
+            if (localStorage.getItem('userInfo')) {
+                //if logged in
+                try {
+                    let responseAddToCart = await addToCart(productId, quantity)
+
+                    setCartItems(await getCart())
+
+                    return responseAddToCart
+                } catch (e) {
+                    console.log(e)
+                }
+            } else {
+                //if guest 
+
+                let indexToUpdate = cartItems.findIndex(c => c.product_id === productId)
+
+                if (indexToUpdate === -1) {
+                    setCartItems(
+                        ...cartItems,
+                        {
+                            product_id: productId,
+                            quantity: quantity
+                        }
+                    )
+
+                } else {
+                    let productToUpdate = cartItems.slice(indexToUpdate, indexToUpdate + 1)[0]
+                    productToUpdate.quantity = quantity
+                    setCartItems(
+                        ...cartItems.slice(0, indexToUpdate),
+                        productToUpdate,
+                        ...cartItems.slice(indexToUpdate + 1),
+                    )
+                }
             }
+
         },
 
-        updateQuantityCart: async(productId, quantity) => {
-            try {
-                let responseUpdateQuantityCart = await updateQuantityCart(productId, quantity)
+        updateQuantityCart: async (productId, quantity) => {
+            if (localStorage.getItem('userInfo')) {
+                //if logged in
+                try {
+                    let responseUpdateQuantityCart = await updateQuantityCart(productId, quantity)
 
-                setCartItems(await getCart())
-                
-                return responseUpdateQuantityCart
+                    setCartItems(await getCart())
 
-            } catch (e) {
-                console.log(e)
+                    return responseUpdateQuantityCart
+
+                } catch (e) {
+                    console.log(e)
+                }
+            } else {
+                //if guest
+                let indexToUpdate = cartItems.findIndex(c => c.product_id === productId)
+
+                if (quantity === 0) {
+                    setCartItems(
+                        ...cartItems.slice[0, indexToUpdate],
+                        ...cartItems.slice(indexToUpdate + 1)
+                    )
+                } else {
+                    let productToUpdate = cartItems.slice(indexToUpdate, indexToUpdate + 1)[0]
+                    productToUpdate.quantity = quantity
+                    setCartItems(
+                        ...cartItems.slice(0, indexToUpdate),
+                        productToUpdate,
+                        ...cartItems.slice(indexToUpdate + 1),
+                    )
+                }
             }
+
         },
 
-        deleteFromCart: async(productId) => {
-            try {
-                let responseDeleteFromCart = await deleteFromCart(productId)
-                return responseDeleteFromCart
-            } catch (e) {
-                console.log(e)
+        deleteFromCart: async (productId) => {
+            if (localStorage.getItem('userInfo')) {
+                //if logged in
+                try {
+                    let responseDeleteFromCart = await deleteFromCart(productId)
+
+                    setCartItems(await getCart())
+
+                    return responseDeleteFromCart
+                } catch (e) {
+                    console.log(e)
+                }
+            } else {
+                //if guest
+                let indexToRemove = cartItems.findIndex(c => c.product_id === productId)
+                setCartItems(
+                    ...cartItems.slice[0, indexToRemove],
+                    ...cartItems.slice(indexToRemove + 1)
+                )
             }
+
         }
     }
 
     useEffect(() => {
 
-        const fetchUserCart = async() => {
+        const fetchUserCart = async () => {
             let cartItems = await getCart()
+            
             setCartItems(cartItems)
         }
 
-        if(userContext.getLoginStatus()){
+        if (userContext.getLoginStatus()) {
+            
             fetchUserCart();
         }
         //else, get from local storage??
@@ -74,11 +143,18 @@ function CartProvider(props) {
 
     }, [userContext.getLoginStatus()])
 
-  return (
-    <CartContext.Provider value={context}>
-        {props.children}
-    </CartContext.Provider>
-  )
+    useEffect(() => {
+
+        localStorage.removeItem('cartItems')
+        localStorage.setItem('cartItems', JSON.stringify(cartItems))
+
+    }, [cartItems])
+
+    return (
+        <CartContext.Provider value={context}>
+            {props.children}
+        </CartContext.Provider>
+    )
 }
 
 export default CartProvider

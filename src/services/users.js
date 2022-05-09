@@ -10,7 +10,7 @@ export async function userLogin(email, password) {
         })
         if (userLoginResponse.data.accessToken) {
             localStorage.setItem('userTokenInfo', JSON.stringify(userLoginResponse.data))
-            console.log(JSON.stringify(userLoginResponse.data))
+            
             return true
         }
     } catch (e) {
