@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-// import { getProductById } from '../services/products'
+
 import ProductContext from '../contexts/products/ProductContext'
 import CartContext from '../contexts/cart/CartContext'
 
@@ -21,7 +21,7 @@ function ProductSingle() {
 
 	useEffect(() => {
 		productContext.setActiveProductId(params.productId)
-		setCategoryName(getCategoryName());
+		// setCategoryName(getCategoryName());
 	}, [])
 
 	useEffect(() => {
@@ -29,12 +29,13 @@ function ProductSingle() {
 	}, [productContext])
 
 
-	function getCategoryName() {
-		
-		let categoryObject = productContext.allCategories().filter(c => parseInt(params.categoryFilter) === c.id)
-		
-		return categoryObject[0].name
-	}
+	// function getCategoryName() {
+	// 	console.log('testing refresh', params.categoryFilter)
+	// 	console.log(productContext.allCategories())
+	// 	let categoryResultArray = productContext.allCategories().filter(c => parseInt(params.categoryFilter) === c.id)
+	// 	console.log(categoryResultArray)
+	// 	return categoryResultArray[0].name
+	// }
 
 	const increaseQuantity = () => {
 		setQuantity(quantity++)
@@ -52,7 +53,7 @@ function ProductSingle() {
 						Home
 					</Breadcrumb.Item>
 					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/categories/" + params.categoryFilter }}>
-						{categoryName ? categoryName : ""}
+						{activeProduct.name ? activeProduct.category.name : ''}
 					</Breadcrumb.Item>
 					<Breadcrumb.Item active>
 						{activeProduct.name ? activeProduct.name.slice(0, 31) + '...' : ""}
@@ -81,7 +82,10 @@ function ProductSingle() {
 
 							</div>
 
-							<button className='add-to-cart-btn btn border border-primary d-block mb-3'>
+							<button className='add-to-cart-btn btn border border-primary d-block mb-3'
+									data-bs-toggle="modal" data-bs-target="#cartModal"
+									onClick={async() => {await cartContext.addToCart(activeProduct, quantity)}}
+							>
 								Add To Cart
 							</button>
 							<button className='buy-it-now-btn btn border border-primary d-block mb-3'>

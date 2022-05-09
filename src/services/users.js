@@ -35,7 +35,7 @@ export function getUserInfoFromLocalStorage() {
 
 export function getRefreshToken() {
     let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
-    console.log('testing getRefreshToken', userTokenInfo.refreshToken)
+    // console.log('testing getRefreshToken', userTokenInfo.refreshToken)
     return userTokenInfo.refreshToken ? userTokenInfo.refreshToken : null
 }
 
@@ -80,7 +80,7 @@ export async function userLogout() {
 
         let refreshToken = getRefreshToken()
 
-        console.log('logout refresh token', refreshToken)
+        // console.log('logout refresh token', refreshToken)
 
         await axios.post(BASE_API_URL + '/user/logout', { refreshToken: refreshToken })
 

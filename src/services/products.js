@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
+const BASE_API_URL = "http://localhost:8080/api"
 
 export async function getCategories() {
    
@@ -56,6 +56,6 @@ export async function getAllProducts(searchInput, categoryFilter) {
 }
 
 export async function getProductById(productId) {
-    let response = await axios.get(BASE_API_URL + '/product-related/products/' + productId);
+    let response = await axios.get(BASE_API_URL + '/product-related/products/' + productId.toString());
     return response.data
 }

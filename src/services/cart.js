@@ -20,7 +20,7 @@ export async function getCart() {
         responseCart.data.map( c => {
             
             return cartItems.push({
-                product_id: c.product_id,
+                product: c.product,
                 quantity: c.quantity
             })
         })
@@ -34,7 +34,7 @@ export async function addToCart(productId, quantity) {
     try {
         if(localStorage.getItem('userInfo')) {
         
-            let responseAddToCart = await axios.post(BASE_API_URL + '/cart/' + productId, {
+            let responseAddToCart = await axios.post(BASE_API_URL + '/cart/' + productId.toString(), {
                 quantity: quantity
             }, {
                 headers: getHttpHeaders()
@@ -51,7 +51,8 @@ export async function updateQuantityCart(productId, quantity) {
     try{
 
         if(localStorage.getItem('userInfo')) {
-            let responseUpdateQuantityCart = await axios.post(BASE_API_URL + '/cart/' + productId, {
+            console.log('testing adding')
+            let responseUpdateQuantityCart = await axios.put(BASE_API_URL + '/cart/' + productId, {
                 newQuantity: quantity
             }, {
                 headers: getHttpHeaders()
