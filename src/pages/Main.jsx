@@ -11,6 +11,7 @@ import Register from './Register'
 import Landing from './Landing'
 import ProductListings from './ProductListings'
 import ProductSingle from './ProductSingle'
+import Checkout from './Checkout';
 
 import NavOffCanvas from '../components/NavOffCanvas'
 import SearchModal from '../components/SearchModal'
@@ -40,6 +41,7 @@ function Main() {
                         <Route path="/account/Register" element={<Register/>}/>
                         <Route path="/categories/:categoryFilter" element={<ProductListings/>}/>
                         <Route path="/categories/:categoryFilter/:productId" element={<ProductSingle/>}/>
+                        <Route path="/checkout-success" element={<Checkout/>}/>
 
 
 

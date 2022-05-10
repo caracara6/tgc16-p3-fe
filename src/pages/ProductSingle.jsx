@@ -16,7 +16,7 @@ function ProductSingle() {
 	let params = useParams()
 
 	let [activeProduct, setActiveProduct] = useState({})
-	let [categoryName, setCategoryName] = useState("")
+	// let [categoryName, setCategoryName] = useState("")
 	let [quantity, setQuantity] = useState(1)
 
 	useEffect(() => {

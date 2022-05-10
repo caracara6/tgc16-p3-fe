@@ -4,7 +4,7 @@ import {
     getHttpHeaders
 } from './users'
 
-const BASE_API_URL = "http://localhost:8080/api"
+const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
 
 export async function getCart() {
     
@@ -13,6 +13,7 @@ export async function getCart() {
     if(localStorage.getItem('userTokenInfo')) {
         
         let headers = getHttpHeaders();
+        console.log('headers', headers)
         let responseCart = await axios.get(BASE_API_URL + '/cart', {headers: headers})
 
         let cartItems = []
@@ -51,7 +52,7 @@ export async function updateQuantityCart(productId, quantity) {
     try{
 
         if(localStorage.getItem('userInfo')) {
-            console.log('testing adding')
+            // console.log('testing adding')
             let responseUpdateQuantityCart = await axios.put(BASE_API_URL + '/cart/' + productId, {
                 newQuantity: quantity
             }, {

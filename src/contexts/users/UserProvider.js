@@ -36,7 +36,7 @@ function UserProvider(props) {
                 setLoginStatus(false)
             }
             setUserInfo(null)
-            localStorage.removeItem(`cartOfUser${userInfo.id}`)
+            localStorage.removeItem(`loggedInCart`)
         },
 
         getLoginStatus: () => {

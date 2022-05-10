@@ -1,25 +1,37 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { checkout } from '../services/checkout'
 import CartContext from '../contexts/cart/CartContext'
+
+
 
 import styled from 'styled-components'
 
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 
 function CartModal() {
 
-	let cartContext = useContext(CartContext)
+	const cartContext = useContext(CartContext)
+	// const navigate = useNavigate();
 
 	const changeQuantity = async (productId, quantity) => {
 		await cartContext.updateQuantityCart(productId, quantity)
 		
 	}
 
-	// const increaseQuantity = async (productId, quantity) => {
-	// 	await cartContext.updateQuantityCart(productId, quantity + 1)
-	// }
+	const handleCheckout = async () => {
+		// navigate('/')
+		//navigate to session.url??
+		let resultUrl = await checkout();
+		if(resultUrl){
+			window.location.href = resultUrl;
+		}
+		// if !result
+	}
 
 	function renderCartItems () {
 		console.log(cartContext.getCartItems())
+		// console.log('testing render cart')
 
 		if(cartContext.getCartItems().length){
 			return cartContext.getCartItems().map((c, i) => {
@@ -50,6 +62,7 @@ function CartModal() {
 				</React.Fragment>
 			})
 		} else {
+			console.log('testing render cart')
 			return 
 		}
 		
@@ -70,7 +83,19 @@ function CartModal() {
 					<div className="modal-body border border-danger">
 						<Container>
 							<Row>
-								{/* {renderCartItems()} */}
+								{renderCartItems()}
+							</Row>
+							<Row>
+								<Col xs={12} md={6} className='border border-success mt-3'>
+									<Button className='cart-btn' data-bs-dismiss="modal">
+										Continue Shopping
+									</Button>
+								</Col>
+								<Col xs={12} md={6} className='border border-success mt-3'>
+									<Button className='cart-btn' data-bs-dismiss="modal" onClick={() => {handleCheckout()}}>
+										Checkout
+									</Button>
+								</Col>
 							</Row>
 						</Container>
 
@@ -101,6 +126,10 @@ const StyledCartModal = styled.div`
 
 img {
 	height: 100%
+}
+
+.cart-btn{
+	width: 100%;
 }
 `
 

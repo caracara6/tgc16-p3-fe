@@ -10,7 +10,7 @@ import { NavLink, Link } from 'react-router-dom'
 
 function NavHeader() {
 
-	let context = useContext(ProductContext);
+	let productContext = useContext(ProductContext);
 
 	return (
 		<React.Fragment>
@@ -28,8 +28,8 @@ function NavHeader() {
 
 						<NavLink to='/categories/all'><ul>All Wines</ul></NavLink>
 
-							{context.allCategories().map( c => 
-							<ul key={c.id}><Link to={"/categories/" + c.id}>{c.name}</Link></ul>)}
+							{productContext.allCategories().map( c => 
+							<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => {productContext.setSearchInput("")}}>{c.name}</Link></ul>)}
 							{/* <ul>Reds</ul>
 							<ul>Whites</ul>
 							<ul>Rose</ul>

@@ -69,8 +69,10 @@ function ProductListings() {
 	// console.log(categoryFilter)
 
 	if(categoryFilter === "all"){
+		
 		context.setCategoryFilter("")
 	} else {
+		
 		context.setCategoryFilter(categoryFilter)
 	}
 
@@ -91,12 +93,12 @@ function ProductListings() {
 
 				<StyledProductListings className='row'>
 					
-					{products.map(p => { return <div key={p.id} className='col col-6 col-md-4 col-lg-3 mx-auto'>
+					{products.length ? products.map(p => { return <div key={p.id} className='col col-6 col-md-4 col-lg-3 mx-auto'>
 						<ProductCard
 							product={p}
 						/>
 						</div>
-					})}
+					}) : <p>There are zero results for your search</p>}
 
 				
 				</StyledProductListings>
