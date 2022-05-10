@@ -10,7 +10,7 @@ export async function userLogin(email, password) {
         })
         if (userLoginResponse.data.accessToken) {
             localStorage.setItem('userTokenInfo', JSON.stringify(userLoginResponse.data))
-            
+
             return true
         }
     } catch (e) {
@@ -46,10 +46,15 @@ export async function refreshAccessToken() {
         try {
             let accessTokenResponse = await axios.post(BASE_API_URL + '/user/refresh', {
                 refreshToken: userTokenInfo.refreshToken
-            })
+            })            
 
             return accessTokenResponse.data.accessToken
         } catch (e) {
+
+            localStorage.removeItem('userTokenInfo')
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('loggedInCart')
+
             console.log(e.response.data)
         }
 
@@ -61,18 +66,18 @@ export async function refreshAccessToken() {
 export function getHttpHeaders() {
     let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
 
-    if(userTokenInfo.accessToken) {
+    if (userTokenInfo.accessToken) {
         let headers = {
             Authorization: `Bearer ${userTokenInfo.accessToken}`
         }
-    
+
         return headers
 
     } else {
         return null;
     }
 
-    
+
 }
 
 export async function userLogout() {

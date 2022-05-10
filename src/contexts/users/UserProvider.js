@@ -10,7 +10,7 @@ import {
     refreshAccessToken,
     getHttpHeaders,
     userLogout,
-    
+
 } from '../../services/users'
 
 function UserProvider(props) {
@@ -21,7 +21,7 @@ function UserProvider(props) {
     const context = {
         userLogin: async (email, password) => {
             let loginStatus = await userLogin(email, password)
-            if(loginStatus === true) {
+            if (loginStatus === true) {
                 setLoginStatus(true)
             }
         },
@@ -30,9 +30,9 @@ function UserProvider(props) {
             return userInfo
         },
 
-        userLogout: async() => {
+        userLogout: async () => {
             let logoutStatus = await userLogout()
-            if(logoutStatus === true){
+            if (logoutStatus === true) {
                 setLoginStatus(false)
             }
             setUserInfo(null)
@@ -52,14 +52,14 @@ function UserProvider(props) {
             let authHeaders = getHttpHeaders();
 
             let userInfoResult = await getUserInfo(authHeaders)
-            
+
             setUserInfo(userInfoResult)
         }
 
-        if(loginStatus) {
+        if (loginStatus) {
             fetchUserData();
         }
-        
+
 
     }, [loginStatus])
 
@@ -69,27 +69,30 @@ function UserProvider(props) {
         setUserInfo(userInfo)
     }, [])
 
-    setInterval( async() => {
-        try {
+    setInterval(async () => {
+        // i.e. only get new access token if user is still logged in
+        if (localStorage.getItem('userInfo')) {
+
             let accessToken = await refreshAccessToken()
-            console.log('access testing', accessToken)
-            let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
+            // console.log('accessToken testing', accessToken)
 
-            userTokenInfo.accessToken = accessToken
+            if (accessToken) {
+                let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
 
-            // console.log('testing refresh token')
+                userTokenInfo.accessToken = accessToken
 
-            localStorage.removeItem('userTokenInfo')
-            localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
+                console.log('++++++')
 
-        } catch (e) {
-            localStorage.removeItem('userTokenInfo')
-            localStorage.removeItem('userInfo')
-            setLoginStatus(false)
-            console.log(e)
+                // console.log('testing refresh token')
+
+                localStorage.removeItem('userTokenInfo')
+                localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
+            } else {
+                setLoginStatus(false)
+            }
         }
-    }, 1000 * 60 * 55)
-    
+    }, 10000)
+
     return <UserContext.Provider value={context}>
         {props.children}
     </UserContext.Provider>

@@ -30,7 +30,7 @@ function CartModal() {
 	}
 
 	function renderCartItems () {
-		console.log(cartContext.getCartItems())
+		// console.log(cartContext.getCartItems())
 		// console.log('testing render cart')
 
 		if(cartContext.getCartItems().length){
@@ -62,7 +62,7 @@ function CartModal() {
 				</React.Fragment>
 			})
 		} else {
-			console.log('testing render cart')
+			// console.log('testing render cart')
 			return 
 		}
 		
