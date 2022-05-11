@@ -12,9 +12,12 @@ export async function userLogin(email, password) {
             localStorage.setItem('userTokenInfo', JSON.stringify(userLoginResponse.data))
 
             return true
+        } else {
+            return userLoginResponse.data.error
         }
     } catch (e) {
-        console.log(e.response.data.error)
+        // console.log(e.response.data.error)
+        return e.response.data.error
     }
 
 }
@@ -42,25 +45,27 @@ export function getRefreshToken() {
 export async function refreshAccessToken() {
     let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
 
-    if (userTokenInfo) {
+    // if (userTokenInfo) {
         try {
             let accessTokenResponse = await axios.post(BASE_API_URL + '/user/refresh', {
                 refreshToken: userTokenInfo.refreshToken
-            })            
+            })      
+            console.log('=======')      
 
             return accessTokenResponse.data.accessToken
         } catch (e) {
-
+            console.log('=======')
             localStorage.removeItem('userTokenInfo')
             localStorage.removeItem('userInfo')
             localStorage.removeItem('loggedInCart')
 
-            console.log(e.response.data)
+            console.log(e)
         }
 
-    } else {
-        return;
-    }
+    // } 
+    // else {
+    //     return;
+    // }
 }
 
 export function getHttpHeaders() {
@@ -95,6 +100,6 @@ export async function userLogout() {
         return true
 
     } catch (e) {
-        console.log(e.response.data)
+        console.log(e)
     }
 }

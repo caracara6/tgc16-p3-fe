@@ -48,7 +48,7 @@ function ProductSingle() {
 	return (
 		<>
 			<StyledProductSinglePage>
-				<Breadcrumb>
+				<Breadcrumb className='breadcrumb-wrapper d-flex justify-content-center pt-2 border border-warning border-3'>
 					<Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
 						Home
 					</Breadcrumb.Item>
@@ -60,10 +60,10 @@ function ProductSingle() {
 					</Breadcrumb.Item>
 				</Breadcrumb>
 
-				<div className='container-img'>
-					<img src={activeProduct.image_url} alt={activeProduct.name}/>
+				<div className='container-img border border-success border-3'>
+					<img className='border border-success border-3' src={activeProduct.image_url} alt={activeProduct.name}/>
 				</div>
-				<div className='container-action'>
+				<div className='container-action mb-3 p-2 border border-success border-3'>
 					<h2>{activeProduct.name}</h2>
 					<div className='call-to-action py-2 border border-success'>
 						<div className='price-header ms-3'>{activeProduct ? `$${(activeProduct.price / 100).toFixed(2)}` : ""}</div>
@@ -140,40 +140,40 @@ function ProductSingle() {
 						</Accordion.Item>
 					</Accordion>
 				</div>
-
-
 			</StyledProductSinglePage>
 		</>
-
 	)
 }
 
 const StyledProductSinglePage = styled.section`
-	border: 1px solid red;
+	// border: 1px solid red;
 	display: flex;
   	flex-wrap: wrap;
+	position: relative;
+	padding-left: 2rem;
+	padding-right: 2rem;
 
-		.container-img, .container-action, .container-info{
+		.container-img, .container-action, .container-info, .breadcrumb-wrapper{
 			flex: 100%;
-			width: 100%!important;
-			border: 1px solid blue;
+			// width: 100%!important;
+			
 		}
 
+		// .breadcrumb{
+		// 	margin: 0 auto;
+		// }
+
 		img {
-			max-width: 100%;
+			width: 100%;
 			object-fit: cover;
 		}
 
 		.call-to-action {
-
 			width: 100%;
-			
 		}
-
 
 		.add-to-cart {
 			width: 100%;
-			
 		}
 
 		.quantity-wrapper{
@@ -183,6 +183,37 @@ const StyledProductSinglePage = styled.section`
 
 		.add-to-cart-btn, .buy-it-now-btn {
 			width: 100%
+		}
+
+		@media (min-width: ${({ theme }) => theme.md}) {
+			.container-action{
+				margin-left: 1rem;
+				margin-right: 1rem;
+			}
+		}
+
+		@media (min-width: ${({ theme }) => theme.lg}) {
+
+			margin-left: 1rem;
+
+			.container-img{
+				flex-basis: 400px
+			}
+			.container-action{
+				flex: 40%;
+				position: sticky;
+				top: 30px;
+				bottom: 20px
+			}
+			.container-info{
+				margin-top: 1rem;
+				flex: 0;
+				flex-basis: 450px;
+				margin-right: auto
+			}
+			.call-to-action{
+				margin-top: 1rem
+			}
 		}
 `
 

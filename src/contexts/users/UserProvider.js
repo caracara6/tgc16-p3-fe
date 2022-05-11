@@ -23,6 +23,9 @@ function UserProvider(props) {
             let loginStatus = await userLogin(email, password)
             if (loginStatus === true) {
                 setLoginStatus(true)
+            } else {
+                // console.log(loginStatus)
+                return loginStatus
             }
         },
 
@@ -85,13 +88,13 @@ function UserProvider(props) {
 
                 // console.log('testing refresh token')
 
-                localStorage.removeItem('userTokenInfo')
+                // localStorage.removeItem('userTokenInfo')
                 localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
             } else {
                 setLoginStatus(false)
             }
         }
-    }, 10000)
+    }, 1000 * 60 * 55)
 
     return <UserContext.Provider value={context}>
         {props.children}

@@ -5,14 +5,21 @@ import { NavLink, Link } from 'react-router-dom'
 import { Dropdown } from 'react-bootstrap'
 
 import UserContext from '../contexts/users/UserContext'
+import CartContext from '../contexts/cart/CartContext'
 
 import NavOffCanvas from './NavOffCanvas'
 import SearchModal from './SearchModal'
 
 
-
 function Header() {
-	let context = useContext(UserContext)
+	const userContext = useContext(UserContext)
+	const cartContext = useContext(CartContext)
+
+	const cartItemCounter = () => {
+		let numCartItems = cartContext.getCartItems().length
+		return numCartItems > 0 ? `${numCartItems}` : ""
+	}
+
 	return (
 		<React.Fragment>
 			<div className='d-flex justify-content-between border border-danger'>
@@ -34,14 +41,14 @@ function Header() {
 
 
 				<div className='border border-danger d-flex'>
-					{context.getLoginStatus() ? <Dropdown>
+					{userContext.getLoginStatus() ? <Dropdown>
 						<Dropdown.Toggle id="dropdown-basic" className='btn'>
 							Account
 						</Dropdown.Toggle>
 
 						<Dropdown.Menu>
 							<Dropdown.Item><Link to="/account/profile">Action</Link></Dropdown.Item>
-							<Dropdown.Item as={Link} to="/" onClick={() => {context.userLogout()}} >Logout</Dropdown.Item>
+							<Dropdown.Item as={Link} to="/" onClick={() => {userContext.userLogout()}} >Logout</Dropdown.Item>
 							
 						</Dropdown.Menu>
 					</Dropdown> : <NavLink to="/account/login" className='d-none d-md-inline'>
@@ -53,7 +60,7 @@ function Header() {
 
 
 					<button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cartModal">
-						Cart
+						Cart ({cartItemCounter()})
 					</button>
 					<button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						Search

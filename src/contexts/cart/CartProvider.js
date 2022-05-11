@@ -47,7 +47,7 @@ function CartProvider(props) {
                 let indexToUpdate = cartItems.findIndex(c => c.product.id === product.id)
 
                 if (indexToUpdate === -1) {
-                    
+
                     setCartItems([
                         ...cartItems,
                         {
@@ -89,7 +89,7 @@ function CartProvider(props) {
                 // console.log('indexToUpdate', indexToUpdate)
                 // console.log(cartItems[indexToUpdate])
                 if (quantity === 0) {
-                    
+
                     console.log('slice', cartItems.slice(0, indexToUpdate))
                     // console.log('...cartItems.slice(indexToUpdate + 1)', ...cartItems.slice(indexToUpdate + 1))
                     setCartItems([
@@ -97,7 +97,7 @@ function CartProvider(props) {
                         ...cartItems.slice(indexToUpdate + 1)
                     ])
                     console.log('checking cart items', cartItems)
-                    
+
                 } else {
                     let cartItemToUpdate = cartItems.slice(indexToUpdate, indexToUpdate + 1)[0]
 
@@ -146,9 +146,9 @@ function CartProvider(props) {
 
             // need to fix this to add on the quantity if already in user cart items
             //for let each item in cartItems, await add to cart??? or else will not be captured when checking out
-            let newCartItems = userCartItems.concat(cartItems)
+            // let newCartItems = userCartItems.concat(cartItems)
 
-            setCartItems(newCartItems)
+            setCartItems(userCartItems)
         }
 
         if (userContext.getLoginStatus()) {
@@ -156,7 +156,7 @@ function CartProvider(props) {
             fetchUserCart();
         } else {
             //if guest
-            if(localStorage.getItem('cartItems')){
+            if (localStorage.getItem('cartItems')) {
                 //retrieve previous cart items by guest
                 let cartItems = JSON.parse(localStorage.getItem('cartItems'))
                 setCartItems(cartItems)
@@ -164,32 +164,33 @@ function CartProvider(props) {
                 //no previous cart items by guest
                 setCartItems([])
             }
-            
+
         }
 
     }, [userContext.getLoginStatus()])
 
 
     useEffect(() => {
+
         if (userContext.getLoginStatus()) {
-            localStorage.removeItem(`loggedInCart`)
+            //to update the cartitems in local storage everytime user edits cart
+            // localStorage.removeItem(`loggedInCart`)
             localStorage.setItem(`loggedInCart`, JSON.stringify(cartItems))
         } else {
-            console.log(cartItems)
             //if guest user
             // if (cartItems !== []) {
-            
+
             if (cartItems.length > 0) {
 
-                //to update the cartitems in local storage everytime user edits cart
-                localStorage.removeItem('cartItems')
+                //to update the cartitems in local storage everytime guest edits cart
+                // localStorage.removeItem('cartItems')
 
                 localStorage.setItem('cartItems', JSON.stringify(cartItems))
-                
+
             } else if (cartItems === []) {
-                console.log('testing')
+                // console.log('testing')
                 let cartItems = JSON.parse(localStorage.getItem('cartItems'))
-                console.log(cartItems)
+                // console.log(cartItems)
                 setCartItems(cartItems)
             }
             // else {
@@ -199,17 +200,17 @@ function CartProvider(props) {
     }, [cartItems])
 
     useEffect(() => {
+        // to set state back to guest's shopping cart items
         if (userContext.getLoginStatus() === false) {
-            console.log('testing')
+            // console.log('testing')
             let cartItems = JSON.parse(localStorage.getItem('cartItems'))
-            console.log(cartItems)
+            // console.log(cartItems)
 
-            if(!cartItems){
+            if (!cartItems) {
                 setCartItems([])
             } else {
                 setCartItems(cartItems)
             }
-            
         }
     }, [])
 

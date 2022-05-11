@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import UserContext from '../contexts/users/UserContext';
 
 import { Form, Button } from 'react-bootstrap'
@@ -7,12 +7,15 @@ import { Form, Button } from 'react-bootstrap'
 
 function Login() {
 
-	let context = useContext(UserContext);
+	const context = useContext(UserContext);
+	const navigate = useNavigate()
 
 	const [ formState, setFormState] = useState({
         email: '',
         password: ''
     })
+
+	let [loginError, setLoginError] = useState("")
 
 	const updateFormField = (e) => {
         setFormState({
@@ -21,8 +24,16 @@ function Login() {
         })
     }
 
-	const handleLogin = () => {
-		context.userLogin(formState.email, formState.password)
+	const handleLogin = async () => {
+		let loginError = await context.userLogin(formState.email, formState.password)
+		console.log('loginError=> ', loginError)
+
+		if(loginError){
+			setLoginError(loginError)
+		} else {
+			setLoginError("")
+			navigate('/')
+		}
 	}
 
 
@@ -65,6 +76,8 @@ function Login() {
 			<div>
 			<NavLink to="/account/register">Create Account</NavLink>
 			</div>
+
+			<p>{loginError}</p>
 			
 
 		</React.Fragment>
