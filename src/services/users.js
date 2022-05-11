@@ -1,4 +1,5 @@
 import axios from 'axios'
+import jwt_decode from "jwt-decode";
 
 const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
 
@@ -44,13 +45,13 @@ export function getRefreshToken() {
 
 export async function refreshAccessToken() {
     let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
-
-    // if (userTokenInfo) {
+    let result = checkTokenValidity(userTokenInfo.refreshToken)
+    if(result){
         try {
             let accessTokenResponse = await axios.post(BASE_API_URL + '/user/refresh', {
                 refreshToken: userTokenInfo.refreshToken
             })      
-            console.log('=======')      
+            console.log('= = = = = =')      
 
             return accessTokenResponse.data.accessToken
         } catch (e) {
@@ -61,16 +62,12 @@ export async function refreshAccessToken() {
 
             console.log(e)
         }
-
-    // } 
-    // else {
-    //     return;
-    // }
+    }    
 }
 
 export function getHttpHeaders() {
     let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
-
+    console.log('userTokenInfo => ', userTokenInfo)
     if (userTokenInfo.accessToken) {
         let headers = {
             Authorization: `Bearer ${userTokenInfo.accessToken}`
@@ -79,10 +76,9 @@ export function getHttpHeaders() {
         return headers
 
     } else {
+        console.log('////////')
         return null;
     }
-
-
 }
 
 export async function userLogout() {
@@ -101,5 +97,19 @@ export async function userLogout() {
 
     } catch (e) {
         console.log(e)
+    }
+}
+
+export function checkTokenValidity(token){
+    let decodedToken = jwt_decode(token);
+    if(decodedToken.exp > decodedToken.iat){
+        return true
+    } else {
+        // post to black list the expired token, reset user info
+        localStorage.removeItem('userTokenInfo')
+        localStorage.removeItem('userInfo')
+        localStorage.removeItem('loggedInCart')
+        
+        return false
     }
 }

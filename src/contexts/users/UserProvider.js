@@ -61,8 +61,28 @@ function UserProvider(props) {
 
         if (loginStatus) {
             fetchUserData();
-        }
 
+            setInterval(async () => {
+                // i.e. only get new access token if user is still logged in
+                if (localStorage.getItem('userInfo')) {
+        
+                    let accessToken = await refreshAccessToken()
+        
+                    if (accessToken) {
+
+                        console.log('////////')
+
+                        let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
+        
+                        userTokenInfo.accessToken = accessToken
+        
+                        localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
+                    } else {
+                        setLoginStatus(false)
+                    }
+                }
+            }, 1000 * 30)
+        }
 
     }, [loginStatus])
 
@@ -70,31 +90,56 @@ function UserProvider(props) {
         let userInfo = getUserInfoFromLocalStorage();
         userInfo ? setLoginStatus(true) : setLoginStatus(false)
         setUserInfo(userInfo)
+
+        let checkingRefreshToken = setInterval(async () => {
+            // i.e. only get new access token if user is still logged in
+            if (localStorage.getItem('userInfo')) {
+    
+                let accessToken = await refreshAccessToken()
+    
+                if (accessToken) {
+                    let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
+    
+                    userTokenInfo.accessToken = accessToken
+    
+                    localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
+                } else {
+                    setLoginStatus(false)
+                }
+            }
+        }, 1000 * 30)
+
+        if(loginStatus){
+            clearInterval(checkingRefreshToken)
+        }
+
     }, [])
 
-    setInterval(async () => {
-        // i.e. only get new access token if user is still logged in
-        if (localStorage.getItem('userInfo')) {
 
-            let accessToken = await refreshAccessToken()
-            // console.log('accessToken testing', accessToken)
 
-            if (accessToken) {
-                let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
+    // setInterval(async () => {
+    //     // i.e. only get new access token if user is still logged in
+    //     if (localStorage.getItem('userInfo')) {
 
-                userTokenInfo.accessToken = accessToken
+    //         let accessToken = await refreshAccessToken()
+    //         // console.log('accessToken testing', accessToken)
 
-                console.log('++++++')
+    //         if (accessToken) {
+    //             let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
 
-                // console.log('testing refresh token')
+    //             userTokenInfo.accessToken = accessToken
 
-                // localStorage.removeItem('userTokenInfo')
-                localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
-            } else {
-                setLoginStatus(false)
-            }
-        }
-    }, 1000 * 60 * 55)
+    //             console.log('++++++')
+
+    //             // console.log('testing refresh token')
+
+    //             // localStorage.removeItem('userTokenInfo')
+    //             localStorage.setItem('userTokenInfo', JSON.stringify(userTokenInfo))
+    //         } else {
+    //             setLoginStatus(false)
+    //         }
+    //     }
+    // }, 720000)
 
     return <UserContext.Provider value={context}>
         {props.children}

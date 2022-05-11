@@ -26,7 +26,7 @@ function NavHeader() {
 					<li className="nav__listitem">Complete Collections
 						<div className="nav__listitemdrop">
 
-						<NavLink to='/categories/all'><ul>All Wines</ul></NavLink>
+						<NavLink to='/categories/all' onClick={() => {productContext.setSearchInput("")}}><ul>All Wines</ul></NavLink>
 
 							{productContext.allCategories().map( c => 
 							<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => {productContext.setSearchInput("")}}>{c.name}</Link></ul>)}

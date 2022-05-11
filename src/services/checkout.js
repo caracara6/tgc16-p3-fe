@@ -12,7 +12,7 @@ export async function checkout() {
         if(localStorage.getItem('userInfo')){
             let authHeaders = getHttpHeaders();
             console.log(authHeaders)
-            let responseStripe = await axios.post(BASE_API_URL + '/checkout', {headers: getHttpHeaders()})
+            let responseStripe = await axios.post(BASE_API_URL + '/checkout', {}, {headers: getHttpHeaders()})
     
             return responseStripe.data.url
         } else {

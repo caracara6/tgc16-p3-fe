@@ -29,7 +29,7 @@ function Header() {
 					data-bs-target="#offcanvasExample"
 					aria-controls="offcanvasExample"
 				>
-					NavSM
+					N
 				</button>
 
 

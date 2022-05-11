@@ -31,7 +31,7 @@ function CartModal() {
 
 	function renderCartItems () {
 		// console.log(cartContext.getCartItems())
-		console.log('testing cartContext.getCartItems()', cartContext.getCartItems())
+		// console.log('testing cartContext.getCartItems()', cartContext.getCartItems())
 
 		if(cartContext.getCartItems().length){
 			return cartContext.getCartItems().map((c, i) => {

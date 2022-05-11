@@ -29,6 +29,7 @@ export const StyledNavList = styled.ul`
         &:focus .nav__listitemdrop{
             opacity: 1;
             visibility: visible;
+            z-index: 1;
         }
 
         &drop{

@@ -2,8 +2,28 @@ import styled from 'styled-components'
 
 export const StyledProductListingsLayout = styled.div`
 display: flex;
-// flex-direction: row;
 border: 2px solid green;
+flex-wrap: wrap;
+
+.filter-wrapper{
+    flex-basis:100%;
+    
+}
+
+.w-100{
+    width:100%
+}
+
+.w-70{
+    width-70vw!important
+}
+
+
+
+.off-canvas-start{
+    width: 70vw!important;
+    color: red;
+}
 `
 
 export const StyledSideFilter = styled.aside`
