@@ -63,6 +63,8 @@ export async function updateQuantityCart(productId, quantity) {
         }
     } catch (e) {
         console.log(e)
+        
+        return e.response.data.message
     }
 }
 

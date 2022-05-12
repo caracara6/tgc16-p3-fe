@@ -67,7 +67,7 @@ export async function refreshAccessToken() {
 
 export function getHttpHeaders() {
     let userTokenInfo = JSON.parse(localStorage.getItem('userTokenInfo'))
-    console.log('userTokenInfo => ', userTokenInfo)
+    // console.log('userTokenInfo => ', userTokenInfo)
     if (userTokenInfo.accessToken) {
         let headers = {
             Authorization: `Bearer ${userTokenInfo.accessToken}`

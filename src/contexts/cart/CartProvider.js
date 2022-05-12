@@ -27,6 +27,11 @@ function CartProvider(props) {
             return cartItems
         },
 
+        refreshCartItems: async () => {
+            let refreshedCartItems = await getCart();
+            setCartItems(refreshedCartItems)
+        },
+
         addToCart: async (product, quantity) => {
 
             if (localStorage.getItem('userInfo')) {
@@ -81,6 +86,9 @@ function CartProvider(props) {
                     return responseUpdateQuantityCart
 
                 } catch (e) {
+
+                    setCartItems(await getCart())
+                    
                     console.log(e)
                 }
             } else {

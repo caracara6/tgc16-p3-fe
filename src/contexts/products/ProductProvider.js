@@ -28,7 +28,7 @@ function ProductProvider(props) {
     const [activeProduct, setActiveProduct] = useState({});
     const [searchInput, setSearchInput] = useState('');
     const [categoryFilter, setCategoryFilter] = useState();
-    const [loaded, setLoaded] = useState(null);
+    let [loaded, setLoaded] = useState(false);
 
     const context = {
 
@@ -71,13 +71,16 @@ function ProductProvider(props) {
             return loaded
         },
 
+        setLoaded: () => {
+            return setLoaded
+        },
+
         setSearchInput: (searchInput) => {
             setLoaded(false);
             return setSearchInput(searchInput);
         },
 
         setCategoryFilter: (categoryFilter) => {
-            console.log('setting loaded false...')
             setLoaded(false);
             return setCategoryFilter(categoryFilter);
         }
@@ -117,11 +120,11 @@ function ProductProvider(props) {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            console.log('loaded', loaded)
+            // console.log('loaded', loaded)
             let products = await getAllProducts(searchInput, categoryFilter);
             setProducts(products);
 
-            console.log('setting loaded true...')
+            // console.log('setting loaded true...')
 
             setLoaded(true);
 

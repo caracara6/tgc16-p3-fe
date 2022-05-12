@@ -64,9 +64,9 @@ div label input {
     position: absolute;
     display: none;
     color: #fff !important;
-  }
+}
 
-  .box input:checked + span {
+.box input:checked + span {
     color: black;
     text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
 }

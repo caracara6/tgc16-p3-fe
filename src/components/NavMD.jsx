@@ -29,7 +29,7 @@ function NavHeader() {
 						<NavLink to='/categories/all' onClick={() => {productContext.setSearchInput("")}}><ul>All Wines</ul></NavLink>
 
 							{productContext.allCategories().map( c => 
-							<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => {productContext.setSearchInput("")}}>{c.name}</Link></ul>)}
+							<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => {productContext.setSearchInput(""); productContext.setLoaded(!productContext.getLoaded())}}>{c.name}</Link></ul>)}
 							{/* <ul>Reds</ul>
 							<ul>Whites</ul>
 							<ul>Rose</ul>

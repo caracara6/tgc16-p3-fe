@@ -59,8 +59,7 @@ function SideFilter(props) {
 
 	return (
 
-		<StyledSideFilter>
-			{/* <button value='3' onClick = { () => {}}>Click</button> */}
+		<StyledSideFilter >
 			<div>SideFilter</div>
 			{/* <h6>Regions</h6> */}
 			{props.uniqueRegions.length ?
@@ -74,6 +73,7 @@ function SideFilter(props) {
 										<input type='checkbox'
 											value={r}
 											onChange={updateRegionSelected}
+											checked = {props.regionSelected.includes(r)}
 										/>
 										<span>{r}</span>
 									</label>
@@ -95,6 +95,7 @@ function SideFilter(props) {
 										<input type='checkbox'
 											value={c}
 											onChange={updateCountrySelected}
+											checked={props.countrySelected.includes(c)}
 										/>
 										<span>{c}</span>
 									</label>
@@ -116,6 +117,7 @@ function SideFilter(props) {
 										<input type='checkbox'
 											value={v}
 											onChange={updateVintageSelected}
+											checked = {props.vintageSelected.includes(v)}
 										/>
 										<span>{v}</span>
 									</label>
@@ -125,6 +127,24 @@ function SideFilter(props) {
 					}
 				</React.Fragment>)
 				: null}
+
+			<h6>Price</h6>
+			{
+				props.priceRange.map(p => {
+					return <React.Fragment key={p.id}>
+						<div className='box'>
+							<label>
+								<input type='radio'
+								value={p.id}
+								onChange={() => {props.setPriceRangeSelected(p)}}
+								name='priceRange'
+								/>
+								<span>{p.display}</span>
+							</label>
+						</div>
+					</React.Fragment>
+				})
+			}
 
 
 		</StyledSideFilter>

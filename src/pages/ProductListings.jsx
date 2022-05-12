@@ -24,17 +24,45 @@ function ProductListings() {
 	let [uniqueVintages, setUniqueVintages] = useState([])
 	let [vintageSelected, setVintageSelected] = useState([])
 
+	let priceRange = [
+		{id: 1, display: 'Below $50', lowerLimit: 0, upperLimit: 4999},
+		{id: 2, display: '$50 to $100', lowerLimit: 5000, upperLimit: 9999},
+		{id: 3, display: '$100 to $150', lowerLimit: 10000, upperLimit: 14999},
+		{id: 4, display: 'Above $150', lowerLimit: 15000, upperLimit: 99999999999}
+	]
+
+	let [ priceRangeSelected, setPriceRangeSelected ] = useState({})
+
+	// let [priceRange, setPriceRange] = useState([
+	// 	{id: 1, display: 'Below $50'},
+	// 	{id: 2, display: '$50 to $100'},
+	// 	{id: 3, display: '$100 to $150'},
+	// 	{id: 4, display: 'Above $150'}
+	// ])
+
 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	// useEffect(() => {
+	// 	setProducts(productContext.allProducts())
+
+	// }, [productContext.allProducts()])
+
 	useEffect(() => {
 		setProducts(productContext.allProducts())
 
-	}, [productContext.allProducts()])
+		setRegionSelected([])
+		setCountrySelected([])
+		setVintageSelected([])
+
+	}, [productContext.getLoaded()])
 
 	useEffect(() => {
+
+		setProducts(productContext.allProducts())
+
 		// let uniqueRegions = products.length ? products.map( p => {return p.region.name}) : null
 		//returns an array of unique region names
 		let uniqueRegions = productContext.allProducts().length ? [...new Set(productContext.allProducts().map(p => p.region.name))] : []
@@ -46,12 +74,20 @@ function ProductListings() {
 		let uniqueVintages = productContext.allProducts().length ? [...new Set(productContext.allProducts().map(p => p.vintage))] : []
 		setUniqueVintages(uniqueVintages)
 
+		setRegionSelected([])
+		setCountrySelected([])
+		setVintageSelected([])
+
 
 
 	}, [productContext.allProducts()])
 
 	useEffect(() => {
+		// setProducts(productContext.allProducts())
+
 		let selectedProducts = [];
+
+		console.log('__________')
 
 		// let filterFields = regionSelected.concat(countrySelected).concat(vintageSelected)
 
@@ -94,7 +130,19 @@ function ProductListings() {
 					}
 				}
 			})
-		} 
+		}
+
+		// function filterByPrice(arr, lowerLimit, upperLimit){
+		// 	let selectedProducts = arr.filter( item => lowerLimit <= item.price <= upperLimit)
+		// 	return selectedProducts
+		// }
+
+		// if(priceRangeSelected.id){
+		// 	console.log('selectedProducts', selectedProducts)
+		// 	selectedProducts = filterByPrice(selectedProducts, priceRange.lowerLimit, priceRange.upperLimit)
+		// }
+
+		
 		// else{
 		// 	selectedProducts = productContext.allProducts()
 		// }
@@ -151,18 +199,27 @@ function ProductListings() {
 
 	let { categoryFilter } = useParams()
 
-	if (categoryFilter === "all") {
-		productContext.setCategoryFilter("")
-	} else {
-		productContext.setCategoryFilter(categoryFilter)
-	}
+	useEffect(() => {
 
+		if (categoryFilter === "all") {
+			productContext.setCategoryFilter("")
+		} else {
+			productContext.setCategoryFilter(categoryFilter)
+		}
+
+
+		
+	
+
+	}, [])
+
+	
 
 
 	return (
 		<React.Fragment>
 
-
+			
 
 			<StyledProductListingsLayout>
 
@@ -218,6 +275,10 @@ function ProductListings() {
 					setUniqueVintages={setUniqueVintages}
 					vintageSelected={vintageSelected}
 					setVintageSelected={setVintageSelected}
+
+					priceRange = {priceRange}
+					priceRangeSelected = {priceRangeSelected}
+					setPriceRangeSelected = {setPriceRangeSelected}
 				/>
 
 
@@ -230,7 +291,7 @@ function ProductListings() {
 								product={p}
 							/>
 						</div>
-					}) : <p>There are zero results for your search</p>}
+					}) : <p>Sorry, there are zero results for your search</p>}
 
 
 				</StyledProductListings>
@@ -239,6 +300,8 @@ function ProductListings() {
 
 
 			</StyledProductListingsLayout>
+
+			
 
 
 

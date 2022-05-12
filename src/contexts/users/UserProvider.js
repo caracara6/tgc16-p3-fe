@@ -81,7 +81,7 @@ function UserProvider(props) {
                         setLoginStatus(false)
                     }
                 }
-            }, 1000 * 30)
+            }, 1000 * 60 * 12)
         }
 
     }, [loginStatus])
