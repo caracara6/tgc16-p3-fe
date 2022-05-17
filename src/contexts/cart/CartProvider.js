@@ -117,7 +117,7 @@ function CartProvider(props) {
                         ...cartItems.slice(indexToUpdate + 1),
                     ])
 
-                    console.log(cartItems)
+                    // console.log(cartItems)
                 }
             }
 

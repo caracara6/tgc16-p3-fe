@@ -9,6 +9,7 @@ import NavMD from '../components/NavMD'
 import Login from './Login'
 import Register from './Register'
 import Landing from './Landing'
+import AboutUs from './AboutUs'
 import ProductListings from './ProductListings'
 import ProductSingle from './ProductSingle'
 import Checkout from './Checkout';
@@ -16,6 +17,7 @@ import Checkout from './Checkout';
 import NavOffCanvas from '../components/NavOffCanvas'
 import SearchModal from '../components/SearchModal'
 import CartModal from '../components/CartModal'
+import Footer from '../components/Footer'
 
 
 
@@ -27,30 +29,26 @@ function Main() {
 
 
                     <Header />
-                    <NavMD className='d-none d-md-block' />
+                    <NavMD/>
 
 
 
                     <NavOffCanvas />
-                    <SearchModal />
                     <CartModal />
+                    <SearchModal />
+                    
 
                     <Routes>
                         <Route path="/" element={<Landing />} />
+                        <Route path="/about-us" element={<AboutUs />} />
                         <Route path="/account/login" element={<Login />} />
                         <Route path="/account/Register" element={<Register/>}/>
                         <Route path="/categories/:categoryFilter" element={<ProductListings/>}/>
                         <Route path="/categories/:categoryFilter/:productId" element={<ProductSingle/>}/>
                         <Route path="/checkout-success" element={<Checkout/>}/>
 
-
-
-
-
-
-
-
                     </Routes>
+                    <Footer/>
                 </Container>
             </BrowserRouter>
 

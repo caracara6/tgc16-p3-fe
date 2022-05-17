@@ -2,6 +2,8 @@ import axios from 'axios'
 import jwt_decode from "jwt-decode";
 
 const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
+// const BASE_API_URL = "http://localhost:8080"
+
 
 export async function userLogin(email, password) {
     try {
@@ -20,12 +22,32 @@ export async function userLogin(email, password) {
         // console.log(e.response.data.error)
         return e.response.data.error
     }
-
 }
 
-export function getUserTokenInfo() {
-    return JSON.parse(localStorage.getItem("userTokenInfo"));
+export async function userRegister(first_name, last_name, email, password){
+    try{
+        let userRegisterResponse = await axios.post(BASE_API_URL + '/user/login', {
+            first_name,
+            last_name,
+            email,
+            password
+        })
+        if(userRegisterResponse.data.accessToken){
+            localStorage.setItem('userTokenInfo', JSON.stringify(userRegisterResponse.data))
+            console.log('testing register')
+            return true
+        } else {
+            console.log('testing register 2', userRegisterResponse.data.message)
+            return userRegisterResponse.data.message
+        }
+    } catch (e) {
+        return e.response.data.message
+    }
 }
+
+// export function getUserTokenInfo() {
+//     return JSON.parse(localStorage.getItem("userTokenInfo"));
+// }
 
 export async function getUserInfo(headers) {
     let userInfoResponse = await axios.get(BASE_API_URL + '/user/profile', { headers: headers })

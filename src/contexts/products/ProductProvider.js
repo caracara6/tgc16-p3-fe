@@ -120,14 +120,10 @@ function ProductProvider(props) {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            // console.log('loaded', loaded)
             let products = await getAllProducts(searchInput, categoryFilter);
             setProducts(products);
 
-            // console.log('setting loaded true...')
-
             setLoaded(true);
-
         }
 
         fetchProducts();

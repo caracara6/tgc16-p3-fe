@@ -14,6 +14,13 @@ import { ThemeProvider } from 'styled-components'
 import GlobalStyles from './components/styles/GlobalStyle'
 
 const theme = {
+
+	colours: {
+		light: '#EAE8FF',
+		dark: '#2D232E',
+		accent: '#CBA2A6'
+	},
+
 	sm: '576px',
 	md: '768px',
 	lg: '992px',

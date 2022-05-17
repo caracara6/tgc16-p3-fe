@@ -33,12 +33,6 @@ function ProductListings() {
 
 	let [ priceRangeSelected, setPriceRangeSelected ] = useState({})
 
-	// let [priceRange, setPriceRange] = useState([
-	// 	{id: 1, display: 'Below $50'},
-	// 	{id: 2, display: '$50 to $100'},
-	// 	{id: 3, display: '$100 to $150'},
-	// 	{id: 4, display: 'Above $150'}
-	// ])
 
 	const [show, setShow] = useState(false);
 
@@ -132,15 +126,18 @@ function ProductListings() {
 			})
 		}
 
-		// function filterByPrice(arr, lowerLimit, upperLimit){
-		// 	let selectedProducts = arr.filter( item => lowerLimit <= item.price <= upperLimit)
-		// 	return selectedProducts
-		// }
+		function filterByPrice(arr, lowerLimit, upperLimit){
+			console.log(lowerLimit, upperLimit)
+			let selectedProducts = arr.filter( item => item.price <= upperLimit && item.price >= lowerLimit)
+			console.log('selectedProducts', selectedProducts)
+			return selectedProducts
+		}
 
-		// if(priceRangeSelected.id){
-		// 	console.log('selectedProducts', selectedProducts)
-		// 	selectedProducts = filterByPrice(selectedProducts, priceRange.lowerLimit, priceRange.upperLimit)
-		// }
+		if(priceRangeSelected.id){
+			
+			selectedProducts = filterByPrice(selectedProducts, priceRangeSelected.lowerLimit, priceRangeSelected.upperLimit)
+			
+		}
 
 		
 		// else{
@@ -171,31 +168,12 @@ function ProductListings() {
 
 		// selectedProducts = removeDeplicateProduct(selectedProducts, p => p.name)
 
-		console.log('selectedProducts', selectedProducts)
-
 		if (selectedProducts.length > 0) {
 			setProducts(selectedProducts)
 		} else {
 			setProducts([])
 		}
-	}, [regionSelected, countrySelected, vintageSelected])
-
-	// useEffect(() => {
-	// 	let selectedProducts = [];
-
-	// 	// console.log(countrySelected)
-
-	// 	countrySelected.map( c => {  
-	// 		productContext.allProducts().map ( p => p.origin_country.name === c ? selectedProducts.push(p) : null)
-	// 	})
-
-	// 	if (selectedProducts.length > 0) {
-	// 		setProducts(selectedProducts)
-	// 	} else {
-	// 		setProducts(productContext.allProducts())
-	// 	}
-
-	// }, [countrySelected])
+	}, [regionSelected, countrySelected, vintageSelected, priceRangeSelected])
 
 	let { categoryFilter } = useParams()
 
@@ -206,10 +184,6 @@ function ProductListings() {
 		} else {
 			productContext.setCategoryFilter(categoryFilter)
 		}
-
-
-		
-	
 
 	}, [])
 

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const StyledProductListingsLayout = styled.div`
+margin-top:15vh;
 display: flex;
 border: 2px solid green;
 flex-wrap: wrap;

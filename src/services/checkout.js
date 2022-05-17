@@ -5,6 +5,7 @@ import {
 } from './users'
 
 const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
+// const BASE_API_URL = "http://localhost:8080"
 
 
 export async function checkout() {
@@ -25,8 +26,8 @@ export async function checkout() {
         //     return false
         // }
     } catch (e) {
-        console.log('testing checkout', e.response.data)
-        console.log(e.response.data)
+        console.log('testing checkout', e)
+        console.log(e)
         return {status: false, message: e.response.data.message}
     }
     

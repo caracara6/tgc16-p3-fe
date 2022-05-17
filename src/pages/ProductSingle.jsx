@@ -56,7 +56,8 @@ function ProductSingle() {
 						{activeProduct.name ? activeProduct.category.name : ''}
 					</Breadcrumb.Item>
 					<Breadcrumb.Item active>
-						{activeProduct.name ? activeProduct.name.slice(0, 31) + '...' : ""}
+						{/* {activeProduct.name ? activeProduct.name.slice(0, 31) + '...' : ""} */}
+						{activeProduct.name ? activeProduct.name.length > 30 ? activeProduct.name.slice(0, 31) + '...' : activeProduct.name : ""}
 					</Breadcrumb.Item>
 				</Breadcrumb>
 
@@ -147,6 +148,7 @@ function ProductSingle() {
 
 const StyledProductSinglePage = styled.section`
 	// border: 1px solid red;
+	margin-top: 15vh;
 	display: flex;
   	flex-wrap: wrap;
 	position: relative;

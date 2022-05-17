@@ -4,7 +4,8 @@ import UserContext from './UserContext';
 
 import {
     userLogin,
-    getUserTokenInfo,
+    userRegister,
+    // getUserTokenInfo,
     getUserInfo,
     getUserInfoFromLocalStorage,
     refreshAccessToken,
@@ -24,8 +25,16 @@ function UserProvider(props) {
             if (loginStatus === true) {
                 setLoginStatus(true)
             } else {
-                // console.log(loginStatus)
                 return loginStatus
+            }
+        },
+
+        userRegister : async(first_name, last_name, email, password) => {
+            let registerStatus = await userRegister(first_name, last_name, email, password)
+            if(registerStatus === true){
+                setLoginStatus(true)
+            } else {
+                return registerStatus
             }
         },
 

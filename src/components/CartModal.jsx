@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { checkout } from '../services/checkout'
 import CartContext from '../contexts/cart/CartContext'
+
+import { useNavigate } from 'react-router-dom'
+
+import Modal from 'react-bootstrap/Modal'
 
 
 
@@ -13,43 +16,44 @@ function CartModal() {
 
 	const cartContext = useContext(CartContext)
 
-	let [cartItems, setCartItems ] = useState([])
-	// const navigate = useNavigate();
+	let [cartItems, setCartItems] = useState([])
 
 	let [updateCartMsg, setUpdateCartMsg] = useState("")
+
+	let [modalState, setModalState] = useState("")
+
+	const navigate = useNavigate()
 
 	const changeQuantity = async (productId, quantity) => {
 		let updateCartMsg = await cartContext.updateQuantityCart(productId, quantity)
 
 		setUpdateCartMsg(updateCartMsg)
-
 	}
 
 	const handleCheckout = async () => {
-		// navigate('/')
-		//navigate to session.url??
 
-		// try{
-		let result = await checkout();
-		if (result.status) {
-			setUpdateCartMsg("")
-			window.location.href = result.url;
+		if (localStorage.getItem('userTokenInfo')) {
+			let result = await checkout();
+			if (result.status) {
+				setModalState("modal")
+				setUpdateCartMsg("")
+				window.location.href = result.url;
+			} else {
+				console.log('testing cart at checkout')
+				setModalState("")
+				setUpdateCartMsg(result.message)
+				cartContext.refreshCartItems()
+			}
 		} else {
-			console.log('testing cart at checkout')
-			setUpdateCartMsg(result.message)
-			cartContext.refreshCartItems()
+			setModalState("modal")
+			navigate('/account/login')
 		}
-		// } catch (e) {
-		// 	console.log('testing checkout at cart')
-		// 	console.log(e)
-		// }
 
-		// if !result
+
+
 	}
 
 	function renderCartItems() {
-		// console.log(cartContext.getCartItems())
-		// console.log('testing cartContext.getCartItems()', cartContext.getCartItems())
 
 		if (cartItems.length) {
 
@@ -58,27 +62,28 @@ function CartModal() {
 				{
 					cartItems.map((c, i) => {
 						return <React.Fragment key={i}>
-							<Col className="border border-danger" xs={12} md={6} >
-								<Row>
-									<Col className='cart-image-wrapper' xs={4}><img src={c.product.image_url} /></Col>
+							<Col xs={12} md={6} >
+								<Row className='d-flex'>
+									<Col className='cart-image-wrapper align-self-center' xs={4}><img src={c.product.image_url} /></Col>
 									<Col xs={8}>{c.product.name}</Col>
 								</Row>
-								{/* <div className='cart-image-wrapper'>
-					<img src={c.product.image_url}/>
-				</div> */}
+								
 							</Col>
-							<Col className="border border-danger d-flex justify-content-between" xs={12} md={6} >
-								<div className='counter d-flex'>
-									<button className='btn border border-success flex-grow-1' onClick={() => { changeQuantity(c.product.id, c.quantity - 1) }}>
-										-
-									</button>
-									<div className='border border-success flex-grow-1'>{c.quantity}</div>
-									<button className='btn border border-success flex-grow-1' onClick={() => { changeQuantity(c.product.id, c.quantity + 1) }}>
-										+
-									</button>
-								</div>
-								<div>
-									${(c.product.price / 100).toFixed(2)}
+							<Col className="px-0 d-flex align-items-center" xs={12} md={6} >
+								<div className='d-flex my-2 justify-content-between action-wrapper'>
+									<div className='counter d-flex'>
+										<button className='btn ' onClick={() => { changeQuantity(c.product.id, c.quantity - 1) }}>
+											-
+										</button>
+										<div className='count '>{c.quantity}</div>
+										<button className='btn ' onClick={() => { changeQuantity(c.product.id, c.quantity + 1) }}>
+											+
+										</button>
+									</div>
+
+									<div className='price align-self-center'>
+										${(c.product.price / 100).toFixed(2)}
+									</div>
 								</div>
 							</Col>
 						</React.Fragment>
@@ -87,7 +92,6 @@ function CartModal() {
 			</React.Fragment>
 
 		} else {
-			// console.log('testing render cart')
 			return <p>Your cart is empty</p>
 		}
 
@@ -103,31 +107,27 @@ function CartModal() {
 				<div className="modal-content">
 					<div className="modal-header">
 						<h5 className="modal-title" id="cartModalLabel">Shopping Cart</h5>
-						<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => {setUpdateCartMsg("")}}></button>
+						<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setUpdateCartMsg("") }}></button>
 					</div>
-					<div className="modal-body border border-danger">
+					<div className="modal-body">
 						<Container>
-							<Row>
+							<Row className='eachCartRow'>
 								{renderCartItems()}
 							</Row>
 							<Row>
-								<Col xs={12} md={6} className='border border-success mt-3'>
-									<Button className='cart-btn' data-bs-dismiss="modal">
+								<Col xs={12} md={6} className='mt-3'>
+									<Button id='continue-shopping-btn' data-bs-dismiss="modal">
 										Continue Shopping
 									</Button>
 								</Col>
-								<Col xs={12} md={6} className='border border-success mt-3'>
-									<Button className='cart-btn' data-bs-dismiss="modal" onClick={() => { handleCheckout() }}>
+								<Col xs={12} md={6} className='mt-3'>
+									<Button id='checkout-btn' data-bs-dismiss={modalState} onClick={() => { handleCheckout() }}>
 										Checkout
 									</Button>
 								</Col>
 							</Row>
 						</Container>
 
-					</div>
-					<div className="modal-footer">
-						<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button type="button" className="btn btn-primary">Save changes</button>
 					</div>
 				</div>
 			</div>
@@ -137,12 +137,50 @@ function CartModal() {
 
 const StyledCartModal = styled.div`
 
-// .cart-body-content{
-// 	position: relative;
-// 	inset: 1rem 0;
-// 	margin: auto;
-	
-// }
+.modal-header{
+	display: block!important;
+	background-color: ${({ theme }) => theme.colours.light};
+	position: relative;
+	border-bottom: none;
+	text-align: center;
+
+	.btn-close{
+		position: absolute;
+		right: 20px;
+		top: 25px;
+	}
+}
+
+.modal-backdrop {
+	background-color: red;
+}
+
+.action-wrapper{
+	width: 100%;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid ${({ theme }) => theme.colours.dark}
+}
+
+.count{
+	padding: 0.7rem 0.7rem 0.25rem;
+}
+
+.counter button {
+	background-color: ${({ theme }) => theme.colours.dark};
+	border-radius: 0px!important;
+	color: white;
+	font-size: 1.5rem;
+	padding: 0.1rem 0.75rem;
+
+}
+
+.modal-content{
+	border-radius: 0px!important;
+}
+
+.cart-image-wrapper{
+	height: 100%!important
+}
 
 .cart-image-wrapper img{
 	max-width: 100%;
@@ -153,9 +191,37 @@ img {
 	height: 100%
 }
 
-.cart-btn{
+#checkout-btn{
 	width: 100%;
+	border-radius: 0px;
+	background-color: black;
+	border: 0px!important;
+	border-color: transparent!important;
 }
+
+#continue-shopping-btn{
+	width: 100%;
+	border-radius: 0px;
+	background-color: ${({ theme }) => theme.colours.light};
+	color: black;
+	border: 0px!important;
+	border-color: transparent!important;
+}
+
+@media (min-width: ${({ theme }) => theme.md}) {
+	.action-wrapper {
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+
+	.eachCartRow > div {
+		border-bottom: 1px solid ${({ theme }) => theme.colours.dark};
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
+	}
+}
+
+
 `
 
 export default CartModal

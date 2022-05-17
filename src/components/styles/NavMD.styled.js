@@ -1,21 +1,27 @@
 import styled from 'styled-components'
 
 export const StyledNavMD = styled.nav`
-
-// position: fixed;
 width: 100%;
 position: relative;
+color: ${({theme}) => theme.colours.dark};
+
+    a{
+        text-decoration: none;
+        color: ${({theme}) => theme.colours.dark};
+    }
 
 `
 
 export const StyledNavList = styled.ul`
     width: 100%;
     display:flex!important;
-    
+    margin-top: 15vh;
     justify-content: center!important;
     align-items: center;
     gap: 2rem;
-    // margin: 0 2rem;
+   
+
+    
 
 
     .nav__listitem {
@@ -29,7 +35,7 @@ export const StyledNavList = styled.ul`
         &:focus .nav__listitemdrop{
             opacity: 1;
             visibility: visible;
-            z-index: 1;
+            z-index: 2;
         }
 
         &drop{

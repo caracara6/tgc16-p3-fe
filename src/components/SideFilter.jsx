@@ -57,6 +57,14 @@ function SideFilter(props) {
 		}
 	}
 
+	const handlePriceChange = (p) => {
+		if(props.priceRangeSelected === p){
+			props.setPriceRangeSelected({})
+		} else {
+			props.setPriceRangeSelected(p)
+		}
+	}
+
 	return (
 
 		<StyledSideFilter >
@@ -134,10 +142,11 @@ function SideFilter(props) {
 					return <React.Fragment key={p.id}>
 						<div className='box'>
 							<label>
-								<input type='radio'
+								<input type='checkbox'
 								value={p.id}
-								onChange={() => {props.setPriceRangeSelected(p)}}
+								onChange={() => {handlePriceChange(p)}}
 								name='priceRange'
+								checked = {props.priceRangeSelected.id === p.id}
 								/>
 								<span>{p.display}</span>
 							</label>

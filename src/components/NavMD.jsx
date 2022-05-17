@@ -15,26 +15,26 @@ function NavHeader() {
 	return (
 		<React.Fragment>
 
-			<StyledNavMD className='nav border border-primary' >
+			<StyledNavMD className='nav d-none d-md-block'>
 				<StyledNavList>
 
 
-				<NavLink to='/'>
-					<li className="nav__listitem">Home</li>
+					<NavLink to='/'>
+						<li className="nav__listitem">Home</li>
 					</NavLink>
-					<li className="nav__listitem">About Us</li>
+					<NavLink to='/about-us'>
+						<li className="nav__listitem">About Us</li>
+					</NavLink>
 					<li className="nav__listitem">Complete Collections
 						<div className="nav__listitemdrop">
 
-						<NavLink to='/categories/all' onClick={() => {productContext.setSearchInput("")}}><ul>All Wines</ul></NavLink>
+							<NavLink to='/categories/all' onClick={() => { productContext.setSearchInput("") }}><ul>All Wines</ul></NavLink>
 
-							{productContext.allCategories().map( c => 
-							<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => {productContext.setSearchInput(""); productContext.setLoaded(!productContext.getLoaded())}}>{c.name}</Link></ul>)}
-							{/* <ul>Reds</ul>
-							<ul>Whites</ul>
-							<ul>Rose</ul>
-							<ul>Champagne</ul>
-							<ul>Sparkling</ul> */}
+							{
+								productContext.allCategories().length ? productContext.allCategories().map(c =>
+									<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => { productContext.setSearchInput(""); productContext.setLoaded(!productContext.getLoaded()) }}>{c.name}</Link></ul>) : null
+							}
+
 						</div>
 					</li>
 
@@ -47,7 +47,7 @@ function NavHeader() {
 
 
 
-			
+
 
 		</React.Fragment>
 
