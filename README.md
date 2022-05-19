@@ -153,30 +153,8 @@ Account creation | User can create a new account by clicking on the 'Create Acco
 * [DBeaver](https://dbeaver.io/)
     * Connect to postgres database
 
-* [Advanced Rest Client](https://install.advancedrestclient.com/install)
-    * Test api routes
-
-* [Express](https://expressjs.com/)
-
-* [hbs](https://handlebarsjs.com/)
-
-* [Stripe](https://stripe.com/)
-    * Payment gateway
-
-* [Cloudinary](https://cloudinary.com/)
-
-* [csurf](https://www.npmjs.com/package/csurf)
-
-* [JWT Tokens](https://jwt.io/)
-
 * [jwt-decode](https://www.npmjs.com/package/jwt-decode)
     * Decode jwt tokens 
-
-* [Random Key Gen](https://randomkeygen.com/)
-
-* [caolan-forms](https://github.com/caolan/forms)
-
-* [dotenv](https://www.npmjs.com/package/dotenv)
 
 * [GitHub](http://github.com)
     * Source code storage

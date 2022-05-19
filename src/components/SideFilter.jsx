@@ -4,22 +4,6 @@ import { StyledSideFilter } from '../components/styles/ProductListings.styled'
 
 function SideFilter(props) {
 
-	// let [counter, setCounter] = useState(1)
-
-	// useEffect(() => {
-	// 	setCounter(counter++)
-	// }, [])
-
-	// let handleClick = (e) => {
-	// 	// setCounter(parseInt(e.target.value))
-	// 	// setCounter(counter++)
-	// 	props.setUniqueRegions(['1', '2', '3'])
-	// }
-
-	// useEffect(() => {
-	// 	props.uniqueRegions.length ? props.uniqueRegions.map( r => {}) : null
-	// }, [props.uniqueRegions])
-
 	const updateRegionSelected = (e) => {
 		if (props.regionSelected.includes(e.target.value)) {
 			let indexToRemove = props.regionSelected.findIndex(
@@ -44,8 +28,6 @@ function SideFilter(props) {
 
 	const updateVintageSelected = (e) => {
 
-		console.log(typeof e.target.value)
-
 		if (props.vintageSelected.includes(e.target.value)) {
 			let indexToRemove = props.vintageSelected.findIndex(
 				value => value === e.target.value
@@ -53,6 +35,18 @@ function SideFilter(props) {
 			props.setVintageSelected([...props.vintageSelected.slice(0, indexToRemove), ...props.vintageSelected.slice(indexToRemove + 1)])
 		} else {
 			props.setVintageSelected([...props.vintageSelected, e.target.value])
+		}
+	}
+
+	const updateProducerSelected = (e) => {
+
+		if (props.producerSelected.includes(e.target.value)) {
+			let indexToRemove = props.producerSelected.findIndex(
+				value => value === e.target.value
+			)
+			props.setProducerSelected([...props.producerSelected.slice(0, indexToRemove), ...props.producerSelected.slice(indexToRemove + 1)])
+		} else {
+			props.setProducerSelected([...props.producerSelected, e.target.value])
 		}
 	}
 
@@ -164,6 +158,31 @@ function SideFilter(props) {
 					</React.Fragment>
 				})
 			}
+
+			{props.uniqueProducers.length ?
+				(<React.Fragment>
+					<h6>WINERY</h6>
+					{
+						props.uniqueProducers.map((p, i) => {
+							return <React.Fragment key={i}>
+								<div className='box' style={{
+                                                backgroundColor: props.producerSelected.includes(p) ? 'black' : 'white',
+                                                color: props.producerSelected.includes(p) ? 'white' : 'black',
+                                    }}>
+									<label>
+										<input type='checkbox'
+											value={p}
+											onChange={updateProducerSelected}
+											checked = {props.producerSelected.includes(p)}
+										/>
+										<span>{p}</span>
+									</label>
+								</div>
+							</React.Fragment>
+						})
+					}
+				</React.Fragment>)
+				: null}
 
 
 		</StyledSideFilter>

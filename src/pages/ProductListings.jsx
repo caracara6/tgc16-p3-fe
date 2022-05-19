@@ -13,7 +13,7 @@ import { Row, Col, Button, Dropdown } from 'react-bootstrap'
 function ProductListings() {
 
 	const productContext = useContext(ProductContext);
-	
+
 	let [products, setProducts] = useState([])
 
 	const [activeHeaders, setActiveHeaders] = useState({})
@@ -27,14 +27,17 @@ function ProductListings() {
 	let [uniqueVintages, setUniqueVintages] = useState([])
 	let [vintageSelected, setVintageSelected] = useState([])
 
+	let [uniqueProducers, setUniqueProducers] = useState([])
+	let [producerSelected, setProducerSelected] = useState([])
+
 	let priceRange = [
-		{id: 1, display: 'Below $50', lowerLimit: 0, upperLimit: 4999},
-		{id: 2, display: '$50 to $100', lowerLimit: 5000, upperLimit: 9999},
-		{id: 3, display: '$100 to $150', lowerLimit: 10000, upperLimit: 14999},
-		{id: 4, display: 'Above $150', lowerLimit: 15000, upperLimit: 99999999999}
+		{ id: 1, display: 'Below $50', lowerLimit: 0, upperLimit: 4999 },
+		{ id: 2, display: '$50 to $100', lowerLimit: 5000, upperLimit: 9999 },
+		{ id: 3, display: '$100 to $150', lowerLimit: 10000, upperLimit: 14999 },
+		{ id: 4, display: 'Above $150', lowerLimit: 15000, upperLimit: 99999999999 }
 	]
 
-	let [ priceRangeSelected, setPriceRangeSelected ] = useState({})
+	let [priceRangeSelected, setPriceRangeSelected] = useState({})
 
 
 	const [show, setShow] = useState(false);
@@ -87,6 +90,7 @@ function ProductListings() {
 		setRegionSelected([])
 		setCountrySelected([])
 		setVintageSelected([])
+		setProducerSelected([])
 
 	}, [productContext.getLoaded()])
 
@@ -96,19 +100,21 @@ function ProductListings() {
 
 		//returns an array of unique region names
 		let uniqueRegions = productContext.allProducts().length ? [...new Set(productContext.allProducts().map(p => p.region.name))] : []
-		setUniqueRegions(uniqueRegions)
+		setUniqueRegions(uniqueRegions.sort())
 
 		let uniqueCountries = productContext.allProducts().length ? [...new Set(productContext.allProducts().map(p => p.origin_country.name))] : []
-		setUniqueCountries(uniqueCountries)
+		setUniqueCountries(uniqueCountries.sort())
 
 		let uniqueVintages = productContext.allProducts().length ? [...new Set(productContext.allProducts().map(p => p.vintage))] : []
-		setUniqueVintages(uniqueVintages)
+		setUniqueVintages(uniqueVintages.sort(function(a, b){return a - b}))
+
+		let uniqueProducers = productContext.allProducts().length ? [...new Set(productContext.allProducts().map(p => p.producer.name))] : []
+		setUniqueProducers(uniqueProducers.sort())
 
 		setRegionSelected([])
 		setCountrySelected([])
 		setVintageSelected([])
-
-
+		setProducerSelected([])
 
 	}, [productContext.allProducts()])
 
@@ -123,10 +129,10 @@ function ProductListings() {
 
 		// console.log(filterFields)
 
-		if(regionSelected.length){
-			selectedProducts = productContext.allProducts().filter( p => {
+		if (regionSelected.length) {
+			selectedProducts = productContext.allProducts().filter(p => {
 				for (let r of regionSelected) {
-					if(p.region.name === r){
+					if (p.region.name === r) {
 						return p
 					}
 				}
@@ -139,50 +145,58 @@ function ProductListings() {
 			selectedProducts = productContext.allProducts()
 		}
 
-		if(countrySelected.length){
-			selectedProducts = selectedProducts.filter( p => {
+		if (countrySelected.length) {
+			selectedProducts = selectedProducts.filter(p => {
 				for (let c of countrySelected) {
-					if(p.origin_country.name === c){
+					if (p.origin_country.name === c) {
 						return p
 					}
 				}
 			})
-		} 
+		}
 		// else{
 		// 	selectedProducts = productContext.allProducts()
 		// }
 
-		if(vintageSelected.length){
-			selectedProducts = selectedProducts.filter( p => {
+		if (vintageSelected.length) {
+			selectedProducts = selectedProducts.filter(p => {
 				for (let v of vintageSelected) {
-					if(p.vintage === parseInt(v)){
+					if (p.vintage === parseInt(v)) {
 						return p
 					}
 				}
 			})
 		}
 
-		function filterByPrice(arr, lowerLimit, upperLimit){
+		if (producerSelected.length) {
+			selectedProducts = selectedProducts.filter(p => {
+				for (let pr of producerSelected) {
+					if (p.producer.name === pr) {
+						return p
+					}
+				}
+			})
+		}
+
+		function filterByPrice(arr, lowerLimit, upperLimit) {
 			console.log(lowerLimit, upperLimit)
-			let selectedProducts = arr.filter( item => item.price <= upperLimit && item.price >= lowerLimit)
+			let selectedProducts = arr.filter(item => item.price <= upperLimit && item.price >= lowerLimit)
 			console.log('selectedProducts', selectedProducts)
 			return selectedProducts
 		}
 
-		if(priceRangeSelected.id){
-			
+		if (priceRangeSelected.id) {
 			selectedProducts = filterByPrice(selectedProducts, priceRangeSelected.lowerLimit, priceRangeSelected.upperLimit)
-			
 		}
 
-		
+
 		// else{
 		// 	selectedProducts = productContext.allProducts()
 		// }
 
 		// filterFields.map(f => {
 		// 	productContext.allProducts().map(p => {
-				
+
 		// 		if (p.region.name === f) {
 		// 			selectedProducts.push(p)
 		// 		} else if (p.origin_country.name === f) {
@@ -192,7 +206,7 @@ function ProductListings() {
 		// 		}
 		// 	})
 		// })
-		
+
 
 		// function removeDeplicateProduct( data, key) {
 		// 	return [
@@ -209,7 +223,7 @@ function ProductListings() {
 		} else {
 			setProducts([])
 		}
-	}, [regionSelected, countrySelected, vintageSelected, priceRangeSelected])
+	}, [regionSelected, countrySelected, vintageSelected, priceRangeSelected, producerSelected])
 
 	let { categoryFilter } = useParams()
 
@@ -218,7 +232,7 @@ function ProductListings() {
 			productContext.setCategoryFilter("")
 			setActiveHeaders(headersArr[0])
 		} else {
-			let activeHeaders = headersArr.filter( h => h.id === categoryFilter)
+			let activeHeaders = headersArr.filter(h => h.id === categoryFilter)
 			setActiveHeaders(activeHeaders[0])
 			productContext.setCategoryFilter(categoryFilter)
 		}
@@ -230,14 +244,14 @@ function ProductListings() {
 			productContext.setCategoryFilter("")
 			setActiveHeaders(headersArr[0])
 		} else {
-			let activeHeaders = headersArr.filter( h => h.id === categoryFilter)
+			let activeHeaders = headersArr.filter(h => h.id === categoryFilter)
 			setActiveHeaders(activeHeaders[0])
 			productContext.setCategoryFilter(categoryFilter)
 		}
 
 	}, [])
 
-	
+
 
 
 	return (
@@ -246,12 +260,12 @@ function ProductListings() {
 				<Row className='header mx-0 '>
 					<Col xs={12} className='px-0'>
 						<div className="header-img-wrapper">
-							<img className='w-100' src={activeHeaders.url} alt={activeHeaders.header}/>
+							<img className='w-100' src={activeHeaders.url} alt={activeHeaders.header} />
 						</div>
 						<h2>{activeHeaders.header}</h2>
 					</Col>
 				</Row>
-				
+
 
 				<Row className='d-lg-none mx-0 mb-4 filter-wrapper'>
 					<Col xs={12} md={6}>
@@ -279,24 +293,29 @@ function ProductListings() {
 
 				<FilterOffCanvas show={show} handleClose={handleClose}
 
-								uniqueRegions={uniqueRegions.length ? uniqueRegions : []}
-								setUniqueRegions={setUniqueRegions}
-								regionSelected={regionSelected}
-								setRegionSelected={setRegionSelected}
+					uniqueRegions={uniqueRegions.length ? uniqueRegions : []}
+					setUniqueRegions={setUniqueRegions}
+					regionSelected={regionSelected}
+					setRegionSelected={setRegionSelected}
 
-								uniqueCountries={uniqueCountries.length ? uniqueCountries : []}
-								setUniqueCountries={setUniqueCountries}
-								countrySelected={countrySelected}
-								setCountrySelected={setCountrySelected}
+					uniqueCountries={uniqueCountries.length ? uniqueCountries : []}
+					setUniqueCountries={setUniqueCountries}
+					countrySelected={countrySelected}
+					setCountrySelected={setCountrySelected}
 
-								uniqueVintages={uniqueVintages.length ? uniqueVintages : []}
-								setUniqueVintages={setUniqueVintages}
-								vintageSelected={vintageSelected}
-								setVintageSelected={setVintageSelected}
+					uniqueVintages={uniqueVintages.length ? uniqueVintages : []}
+					setUniqueVintages={setUniqueVintages}
+					vintageSelected={vintageSelected}
+					setVintageSelected={setVintageSelected}
 
-								priceRange = {priceRange}
-								priceRangeSelected = {priceRangeSelected}
-								setPriceRangeSelected = {setPriceRangeSelected}
+					priceRange={priceRange}
+					priceRangeSelected={priceRangeSelected}
+					setPriceRangeSelected={setPriceRangeSelected}
+
+					uniqueProducers={uniqueProducers.length ? uniqueProducers : []}
+					setUniqueProducers={setUniqueProducers}
+					producerSelected={producerSelected}
+					setProducerSelected={setProducerSelected}
 				/>
 
 				<SideFilter uniqueRegions={uniqueRegions.length ? uniqueRegions : []}
@@ -314,9 +333,14 @@ function ProductListings() {
 					vintageSelected={vintageSelected}
 					setVintageSelected={setVintageSelected}
 
-					priceRange = {priceRange}
-					priceRangeSelected = {priceRangeSelected}
-					setPriceRangeSelected = {setPriceRangeSelected}
+					priceRange={priceRange}
+					priceRangeSelected={priceRangeSelected}
+					setPriceRangeSelected={setPriceRangeSelected}
+
+					uniqueProducers={uniqueProducers.length ? uniqueProducers : []}
+					setUniqueProducers={setUniqueProducers}
+					producerSelected={producerSelected}
+					setProducerSelected={setProducerSelected}
 				/>
 
 
@@ -339,7 +363,7 @@ function ProductListings() {
 
 			</StyledProductListingsLayout>
 
-			
+
 
 
 
