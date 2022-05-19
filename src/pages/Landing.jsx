@@ -16,7 +16,7 @@ function Landing() {
 					alt="First slide"
 				/>
 				<Carousel.Caption className='caption1'>
-					<h3>WELCOME TO PROJECT 3</h3>
+					<h3>WELCOME TO CINQ À SEPT</h3>
 					<p>TOP RATED WINES FROM AROUND THE WORLD, WITH FREE SHIPPING ON ALL ORDERS</p>
 					<Link to='/categories/all'>YOUR BEST WINES ARE JUST A CLICK AWAY <FaChevronRight/></Link>
 				</Carousel.Caption>
@@ -44,7 +44,7 @@ function Landing() {
 
 				<Carousel.Caption className='caption3'>
 					<h3>LIFE'S A CELEBRATION</h3>
-					<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+					<p>KEEP CALM AND POUR ON.</p>
 					<Link to='/categories/all'>SHOP NOW <FaChevronRight/></Link>
 				</Carousel.Caption>
 			</Carousel.Item>

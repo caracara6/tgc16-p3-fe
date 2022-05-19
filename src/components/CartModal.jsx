@@ -4,9 +4,6 @@ import CartContext from '../contexts/cart/CartContext'
 
 import { useNavigate } from 'react-router-dom'
 
-import Modal from 'react-bootstrap/Modal'
-
-
 
 import styled from 'styled-components'
 

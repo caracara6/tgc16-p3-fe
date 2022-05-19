@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, } from 'react'
 import { useParams } from 'react-router-dom'
 import ProductContext from '../contexts/products/ProductContext';
-import CartContext from '../contexts/cart/CartContext';
 
 import { StyledProductListingsLayout, StyledProductListings } from '../components/styles/ProductListings.styled'
 
@@ -9,13 +8,12 @@ import SideFilter from '../components/SideFilter'
 import FilterOffCanvas from '../components/FilterOffCanvas';
 import ProductCard from '../components/ProductCard';
 
-import { Row, Col, Button, Offcanvas, Dropdown } from 'react-bootstrap'
+import { Row, Col, Button, Dropdown } from 'react-bootstrap'
 
 function ProductListings() {
 
 	const productContext = useContext(ProductContext);
 	
-
 	let [products, setProducts] = useState([])
 
 	const [activeHeaders, setActiveHeaders] = useState({})

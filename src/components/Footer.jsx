@@ -8,7 +8,7 @@ function Footer() {
   return (
       <StyledFooter>
           <h4>
-            CINQ A SEPT WINE COMPANY - INFORMATION
+            CINQ À SEPT WINE COMPANY - INFORMATION
           </h4>
           <ul>
               <li>About Us</li>

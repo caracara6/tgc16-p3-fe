@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import CartContext from '../contexts/cart/CartContext'
 
@@ -7,11 +7,6 @@ import styled from 'styled-components'
 
 function ProductCard({ product }) {
     const cartContext = useContext(CartContext)
-    const navigate = useNavigate();
-    // let context = useContext(ProductContext);
-
-    // let { categoryFilter } = useParams();
-    // console.log('cardParams => ', categoryFilter)
 
     const handleAddToCart = async(product) => {
         await cartContext.addToCart(product, 1)

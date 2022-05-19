@@ -6,14 +6,14 @@
  * Project 3
 
 
-The live demo can be found at [https://the-daily-orchid.netlify.app](https://the-daily-orchid.netlify.app).
+The live demo can be found at [https://cinq-a-sept.netlify.app](https://cinq-a-sept.netlify.app/).
 
-Backend repository is [here](https://github.com/caracara6/project2).
+Backend repository is [here](https://github.com/caracara6/tgc16-p3-be).
 
 ## Summary
 
 **Context**
-<insert project 3 name> is a mobile-responsive online e-commerce platform retailing wine. Customers can shop for wine and tailor their search according to wine-specific criteria, such as type of wine, region, origin country, and vintage. The target market includes wine afficionados, wine-lovers, and wine-drinkers in general. The site is simple to use and maintain, and this facilitates sales and profit for the site owner.
+Cinq a Sept - 5 to 7 in French - is a mobile-responsive online e-commerce platform retailing wine. Customers can shop for wine and tailor their search according to wine-specific criteria, such as type of wine, region, origin country, and vintage. The target market includes wine afficionados, wine-lovers, and wine-drinkers in general. The site is simple to use and maintain, and this facilitates sales and profit for the site owner.
 
 ## UI/UX
 
@@ -26,7 +26,7 @@ _User_
 * Objective: Search for wine easily by name, relevant keywords, and tasting and olfactory notes, filter by wine-specific criteria such as country of origin, region produced, wine vintage, type of wine (e.g. red, wine, sparkling), and also general criteria such as price range, easy-checkout with an online payment system that accepts credit cards, easy adding to and storing in cart
 <br>
 
-* Needs: Platform with simple features such as checkboxes and dropdowns which allows for easy search and browse
+* Needs: Platform with simple features such as checkboxes and dropdowns which allows for easy search and browse, clear information about product provided
 <br>
 
 * Demographics:
@@ -57,7 +57,7 @@ _Functional Requirements_
 * Consumers who log in into their accounts on the ecommerce site are able to make purchases via Stripe checkout. 
 
 _Content Requirements_
-* 
+* Content requirements for customers include providing their email, password, and name when signing up for an account. Content requirements for admin when posting a new sales listing include name, grape varietals, price, stock, winery, size, photo. 
 
 _Non-functional requirements_
 * Mobile responsiveness
@@ -66,13 +66,25 @@ _Non-functional requirements_
 
 ### **Structure**
 
+Mockup wireframes can be found [here](https://miro.com/app/board/uXjVO0kP2Mc=/?share_link_id=937932661196).
+
 ### **Skeleton**
+
+<img src='./public/CAS-sitemap.jpg' style='display:block'/>
 
 _Colour Palette_
 
+Colour palette can be found [here](https://coolors.co/eae8ff-2d232e-fafafa-d6d6d7).
+
+Hex #eae8ff and #d6d6d7 were chosen to represent the tranparency of glass. The majority of the app is decked out in monochrome colours in order to allow the colours of the wine/wine bottles to pop.
+
 _Font Choices_
 
+The font choice is [Montserrat](https://fonts.google.com/specimen/Montserrat?query=mont), a clean and modern sans serif font. This allows for easy readability and gives an overall polished finish.
+
 _Layout_
+
+The product details page transforms from single-column for mobile devices to dual-column for laptop-sized devices. This allows for better use of white space. 
 
 ## Features
 1. **Users can search through the sales listings.** 
@@ -88,6 +100,12 @@ Should users choose to checkout with their cart items, assuming no discrepencies
 On the admin site, admin can add new product listings and relevant wine-specific information. Fields include name, description, taste and smell attributes, winery, grape varietals, vintage. Admin can also update information about the products, for e.g. new stock or a change in price.
 
 _Limitations and future implementations_
+
+Due to the time limitation of this project, certain features have yet to be developed. This includes sorting, pagination, and autocomplete.
+
+Users are currently unable to view their orders, as well as do CRUD on their account information. Plans in future include implementing this feature for users to change their account information.
+
+Some comments in the code have not been removed prior to project submission as I intend to work on this in future.
 
 ## Testing
 
@@ -109,6 +127,7 @@ Account creation | User can create a new account by clicking on the 'Create Acco
     * Library for building reactive user interfaces
 
 * [React Router V6.3](https://reactrouter.com/docs/en/v6/getting-started/overview)
+    * Routing for ReactJS
 
 * [HTML5](https://www.w3.org/standards/webdesign/htmlcss)
     * For general styling and layout
@@ -120,8 +139,10 @@ Account creation | User can create a new account by clicking on the 'Create Acco
     * Library of styled components
 
 * [React Bootstrap](https://react-bootstrap.github.io/)
+    * Library of styled components
 
 * [Styled Components](https://styled-components.com/)
+    * Library to build custom components.
 
 * [Mysql](https://www.mysql.com/)
     * Relational database used by server to store data before deployment
@@ -130,14 +151,17 @@ Account creation | User can create a new account by clicking on the 'Create Acco
     * Relational database used by server to store data after deployment to Heroku
 
 * [DBeaver](https://dbeaver.io/)
+    * Connect to postgres database
 
 * [Advanced Rest Client](https://install.advancedrestclient.com/install)
+    * Test api routes
 
 * [Express](https://expressjs.com/)
 
 * [hbs](https://handlebarsjs.com/)
 
 * [Stripe](https://stripe.com/)
+    * Payment gateway
 
 * [Cloudinary](https://cloudinary.com/)
 
@@ -146,6 +170,7 @@ Account creation | User can create a new account by clicking on the 'Create Acco
 * [JWT Tokens](https://jwt.io/)
 
 * [jwt-decode](https://www.npmjs.com/package/jwt-decode)
+    * Decode jwt tokens 
 
 * [Random Key Gen](https://randomkeygen.com/)
 
@@ -177,3 +202,9 @@ Account creation | User can create a new account by clicking on the 'Create Acco
 ## Deployment
 
 * Deployment instructions for Netlify can be found [here](https://www.netlify.com/blog/2016/07/22/deploy-react-apps-in-less-than-30-seconds/).
+
+## Acknowledgements
+
+* All images are from Google Search
+
+* My cute and helpful classmates

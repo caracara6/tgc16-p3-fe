@@ -13,16 +13,23 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     outline: none !important;
     box-shadow: none !important;
+	font-family: 'Montserrat', sans-serif;
+
     // overflow-x: hidden;
 }
 
 .container-fluid{
 	padding: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
-* {
-	font-family: 'Montserrat', sans-serif;
+.main-content {
+	flex: 1;
 }
+
+
 
 svg{
 	width: 1.5rem;

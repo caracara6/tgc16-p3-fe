@@ -21,9 +21,6 @@ export const StyledNavList = styled.ul`
     gap: 2rem;
    
 
-    
-
-
     .nav__listitem {
         list-style: none;
         // position: relative;
@@ -32,7 +29,8 @@ export const StyledNavList = styled.ul`
         cursor: pointer;
 
         &:hover .nav__listitemdrop, 
-        &:focus .nav__listitemdrop{
+        &:focus .nav__listitemdrop,
+        &:active .nav__listitemdrop {
             opacity: 1;
             visibility: visible;
             z-index: 2;
@@ -40,7 +38,7 @@ export const StyledNavList = styled.ul`
 
         &drop{
             position: absolute;
-            top:100% ;
+            top:90% ;
             left:0%;
             width: 100%;
             border: 1px solid grey;

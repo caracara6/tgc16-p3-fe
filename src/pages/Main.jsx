@@ -29,26 +29,25 @@ function Main() {
 
 
                     <Header />
-                    <NavMD/>
-
-
+                    <NavMD />
 
                     <NavOffCanvas />
                     <CartModal />
                     <SearchModal />
-                    
 
-                    <Routes>
-                        <Route path="/" element={<Landing />} />
-                        <Route path="/about-us" element={<AboutUs />} />
-                        <Route path="/account/login" element={<Login />} />
-                        <Route path="/account/Register" element={<Register/>}/>
-                        <Route path="/categories/:categoryFilter" element={<ProductListings/>}/>
-                        <Route path="/categories/:categoryFilter/:productId" element={<ProductSingle/>}/>
-                        <Route path="/checkout-success" element={<Checkout/>}/>
+                    <div className='main-content'>
+                        <Routes>
+                            <Route path="/" element={<Landing />} />
+                            <Route path="/about-us" element={<AboutUs />} />
+                            <Route path="/account/login" element={<Login />} />
+                            <Route path="/account/Register" element={<Register />} />
+                            <Route path="/categories/:categoryFilter" element={<ProductListings />} />
+                            <Route path="/categories/:categoryFilter/:productId" element={<ProductSingle />} />
+                            <Route path="/checkout-success" element={<Checkout />} />
 
-                    </Routes>
-                    <Footer/>
+                        </Routes>
+                    </div>
+                    <Footer />
                 </Container>
             </BrowserRouter>
 
