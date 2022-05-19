@@ -15,7 +15,6 @@ import UserContext from '../contexts/users/UserContext'
 import CartContext from '../contexts/cart/CartContext'
 
 import NavOffCanvas from './NavOffCanvas'
-// import SearchModal from './SearchModal'
 
 
 function Header() {
@@ -49,12 +48,12 @@ function Header() {
 
 				<div className='d-flex align-items-center' id='user-options-wrapper'>
 					{userContext.getLoginStatus() ? <Dropdown>
-						<Dropdown.Toggle id="dropdown-basic" className='btn me-2'>
+						<Dropdown.Toggle id="dropdown-basic" className='btn me-2 d-none d-md-block'>
 							ACCOUNT
 						</Dropdown.Toggle>
 
 						<Dropdown.Menu>
-							<Dropdown.Item><Link to="/account/profile">Action</Link></Dropdown.Item>
+							<Dropdown.Item><Link to="/account/profile">PROFILE</Link></Dropdown.Item>
 							<Dropdown.Item as={Link} to="/" onClick={() => {userContext.userLogout()}}>LOGOUT</Dropdown.Item>
 							
 						</Dropdown.Menu>
@@ -80,7 +79,6 @@ function Header() {
 
 
 			<NavOffCanvas />
-			{/* <SearchModal /> */}
 			</StyledHeader>
 		</StyledHeaderWrapper>
 
@@ -106,6 +104,13 @@ z-index: 5;
 const StyledHeader = styled.div`
 position: relative;
 height: 10vh;
+
+#dropdown-basic{
+	background-color: white!important;
+	color: black;
+	border: none;
+
+}
 
 .btn {
 	white-space: nowrap;

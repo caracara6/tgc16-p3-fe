@@ -42,8 +42,13 @@ export async function addToCart(productId, quantity) {
             }, {
                 headers: getHttpHeaders()
             })
+
+            console.log(responseAddToCart.data.message)
+
+            let result = {status: true, message: responseAddToCart.data.message}
     
-            return responseAddToCart.data.message
+            return result
+            // return responseAddToCart.data.message
         }
     } catch (e) {
         console.log(e)

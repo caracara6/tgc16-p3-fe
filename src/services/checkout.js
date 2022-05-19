@@ -28,7 +28,7 @@ export async function checkout() {
     } catch (e) {
         console.log('testing checkout', e)
         console.log(e)
-        return {status: false, message: e.response.data.message}
+        return {status: false, message: e.response.data}
     }
     
 }

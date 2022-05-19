@@ -48,9 +48,6 @@ function CartModal() {
 			setModalState("modal")
 			navigate('/account/login')
 		}
-
-
-
 	}
 
 	function renderCartItems() {
@@ -106,7 +103,7 @@ function CartModal() {
 			<div className="modal-dialog modal-dialog-centered">
 				<div className="modal-content">
 					<div className="modal-header">
-						<h5 className="modal-title" id="cartModalLabel">Shopping Cart</h5>
+						<h5 className="modal-title" id="cartModalLabel">SHOPPING CART</h5>
 						<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setUpdateCartMsg("") }}></button>
 					</div>
 					<div className="modal-body">
@@ -117,12 +114,12 @@ function CartModal() {
 							<Row>
 								<Col xs={12} md={6} className='mt-3'>
 									<Button id='continue-shopping-btn' data-bs-dismiss="modal">
-										Continue Shopping
+										CONTINUE SHOPPING
 									</Button>
 								</Col>
 								<Col xs={12} md={6} className='mt-3'>
 									<Button id='checkout-btn' data-bs-dismiss={modalState} onClick={() => { handleCheckout() }}>
-										Checkout
+										CHECKOUT
 									</Button>
 								</Col>
 							</Row>
@@ -157,8 +154,9 @@ const StyledCartModal = styled.div`
 
 .action-wrapper{
 	width: 100%;
-	padding-bottom: 0.5rem;
+	padding: 0 0rem 0.5rem;
 	border-bottom: 1px solid ${({ theme }) => theme.colours.dark}
+
 }
 
 .count{
@@ -171,7 +169,6 @@ const StyledCartModal = styled.div`
 	color: white;
 	font-size: 1.5rem;
 	padding: 0.1rem 0.75rem;
-
 }
 
 .modal-content{
@@ -210,7 +207,7 @@ img {
 
 @media (min-width: ${({ theme }) => theme.md}) {
 	.action-wrapper {
-		padding-bottom: 0;
+		padding: 0 1rem, 0;
 		border-bottom: none;
 	}
 

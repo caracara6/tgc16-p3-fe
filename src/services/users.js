@@ -26,7 +26,7 @@ export async function userLogin(email, password) {
 
 export async function userRegister(first_name, last_name, email, password){
     try{
-        let userRegisterResponse = await axios.post(BASE_API_URL + '/user/login', {
+        let userRegisterResponse = await axios.post(BASE_API_URL + '/user/register', {
             first_name,
             last_name,
             email,
@@ -34,7 +34,7 @@ export async function userRegister(first_name, last_name, email, password){
         })
         if(userRegisterResponse.data.accessToken){
             localStorage.setItem('userTokenInfo', JSON.stringify(userRegisterResponse.data))
-            console.log('testing register')
+            console.log('register', userRegisterResponse.data.accessToken)
             return true
         } else {
             console.log('testing register 2', userRegisterResponse.data.message)

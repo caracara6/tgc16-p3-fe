@@ -29,7 +29,7 @@ function Footer() {
 }
 
 const StyledFooter = styled.footer`
-height: 30vh;
+
 background-color: ${({theme})=>theme.colours.dark};
 color: white;
 padding: 2rem;

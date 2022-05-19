@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect, } from 'react'
 import { useParams } from 'react-router-dom'
 import ProductContext from '../contexts/products/ProductContext';
+import CartContext from '../contexts/cart/CartContext';
 
 import { StyledProductListingsLayout, StyledProductListings } from '../components/styles/ProductListings.styled'
 
 import SideFilter from '../components/SideFilter'
+import FilterOffCanvas from '../components/FilterOffCanvas';
 import ProductCard from '../components/ProductCard';
 
 import { Row, Col, Button, Offcanvas, Dropdown } from 'react-bootstrap'
@@ -12,8 +14,11 @@ import { Row, Col, Button, Offcanvas, Dropdown } from 'react-bootstrap'
 function ProductListings() {
 
 	const productContext = useContext(ProductContext);
+	
 
 	let [products, setProducts] = useState([])
+
+	const [activeHeaders, setActiveHeaders] = useState({})
 
 	let [uniqueRegions, setUniqueRegions] = useState([])
 	let [regionSelected, setRegionSelected] = useState([])
@@ -44,6 +49,40 @@ function ProductListings() {
 
 	// }, [productContext.allProducts()])
 
+	let headersArr = [
+		{
+			id: 'all',
+			header: 'All WINE COLLECTION',
+			url: 'https://assets.gqindia.com/photos/5fd2295bc7b41e72e9031a5a/master/pass/wine-top-image.jpg'
+		},
+		{
+			id: '1',
+			header: 'RED WINE',
+			url: 'https://cdn.shopify.com/s/files/1/0507/5540/3951/collections/shutterstock_259104998_2450x.jpg?v=1608741570'
+		},
+		{
+			id: '2',
+			header: 'WHITE WINE',
+			url: 'https://www.israel21c.org/wp-content/uploads/2020/05/shutterstock_626512295-1000x657.jpg'
+		},
+		{
+			id: '3',
+			header: 'ROSÉ WINE',
+			url: 'https://www.thespruceeats.com/thmb/as_7iwRVoyusWeVI_yQ6vjnC2vE=/940x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/twenty20_a74f5065-444e-4d33-973b-4dc14fc08f80-5908ca0f5f9b5864705a606e.jpg'
+		},
+		{
+			id: '4',
+			header: 'CHAMPAGNE',
+			url: 'https://static.onecms.io/wp-content/uploads/sites/23/2020/05/04/pour-sparkling.jpg'
+		},
+		{
+			id: '5',
+			header: 'SPARKLING WINE',
+			url: 'https://images.ctfassets.net/3s5io6mnxfqz/3JZeSBR1r0kaq4J2CVhBvy/4ab04858a7c8831bdc24b2315606ef57/AdobeStock_185937370.jpeg?fm=jpg&w=900&fl=progressive'
+		},
+
+	]
+
 	useEffect(() => {
 		setProducts(productContext.allProducts())
 
@@ -57,7 +96,6 @@ function ProductListings() {
 
 		setProducts(productContext.allProducts())
 
-		// let uniqueRegions = products.length ? products.map( p => {return p.region.name}) : null
 		//returns an array of unique region names
 		let uniqueRegions = productContext.allProducts().length ? [...new Set(productContext.allProducts().map(p => p.region.name))] : []
 		setUniqueRegions(uniqueRegions)
@@ -178,10 +216,24 @@ function ProductListings() {
 	let { categoryFilter } = useParams()
 
 	useEffect(() => {
+		if (categoryFilter === "all") {
+			productContext.setCategoryFilter("")
+			setActiveHeaders(headersArr[0])
+		} else {
+			let activeHeaders = headersArr.filter( h => h.id === categoryFilter)
+			setActiveHeaders(activeHeaders[0])
+			productContext.setCategoryFilter(categoryFilter)
+		}
+	}, [categoryFilter])
+
+	useEffect(() => {
 
 		if (categoryFilter === "all") {
 			productContext.setCategoryFilter("")
+			setActiveHeaders(headersArr[0])
 		} else {
+			let activeHeaders = headersArr.filter( h => h.id === categoryFilter)
+			setActiveHeaders(activeHeaders[0])
 			productContext.setCategoryFilter(categoryFilter)
 		}
 
@@ -192,15 +244,21 @@ function ProductListings() {
 
 	return (
 		<React.Fragment>
-
-			
-
 			<StyledProductListingsLayout>
+				<Row className='header mx-0 '>
+					<Col xs={12} className='px-0'>
+						<div className="header-img-wrapper">
+							<img className='w-100' src={activeHeaders.url} alt={activeHeaders.header}/>
+						</div>
+						<h2>{activeHeaders.header}</h2>
+					</Col>
+				</Row>
+				
 
-				<Row className='d-lg-none mx-0 border border-success filter-wrapper'>
+				<Row className='d-lg-none mx-0 mb-4 filter-wrapper'>
 					<Col xs={12} md={6}>
-						<Button className='w-100 my-2 d-lg-none' onClick={handleShow}>
-							Filter
+						<Button className='w-100 my-2 d-lg-none filter-btn' onClick={handleShow}>
+							FILTER
 						</Button>
 					</Col>
 					<Col xs={12} md={6}>
@@ -221,19 +279,27 @@ function ProductListings() {
 					</Col>
 				</Row>
 
-				<Offcanvas show={show} onHide={handleClose}>
-					<Offcanvas.Header closeButton>
-						<Offcanvas.Title>Offcanvas</Offcanvas.Title>
-					</Offcanvas.Header>
-					<Offcanvas.Body>
-						Some text as placeholder. In real life you can have the elements you
-						have chosen. Like, text, images, lists, etc.
-					</Offcanvas.Body>
-				</Offcanvas>
+				<FilterOffCanvas show={show} handleClose={handleClose}
 
+								uniqueRegions={uniqueRegions.length ? uniqueRegions : []}
+								setUniqueRegions={setUniqueRegions}
+								regionSelected={regionSelected}
+								setRegionSelected={setRegionSelected}
 
+								uniqueCountries={uniqueCountries.length ? uniqueCountries : []}
+								setUniqueCountries={setUniqueCountries}
+								countrySelected={countrySelected}
+								setCountrySelected={setCountrySelected}
 
+								uniqueVintages={uniqueVintages.length ? uniqueVintages : []}
+								setUniqueVintages={setUniqueVintages}
+								vintageSelected={vintageSelected}
+								setVintageSelected={setVintageSelected}
 
+								priceRange = {priceRange}
+								priceRangeSelected = {priceRangeSelected}
+								setPriceRangeSelected = {setPriceRangeSelected}
+				/>
 
 				<SideFilter uniqueRegions={uniqueRegions.length ? uniqueRegions : []}
 					setUniqueRegions={setUniqueRegions}
@@ -260,7 +326,7 @@ function ProductListings() {
 				<StyledProductListings className='row'>
 
 					{products.length ? products.map(p => {
-						return <div key={p.id} className='col col-6 col-md-4 col-lg-3 mx-auto'>
+						return <div key={p.id} className='col col-6 col-md-4 '>
 							<ProductCard
 								product={p}
 							/>

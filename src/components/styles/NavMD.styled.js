@@ -47,7 +47,7 @@ export const StyledNavList = styled.ul`
             background-color: #fff;
             padding: 1rem ;
             display: flex;
-            flex-direction: column;
+            // flex-direction: column;
             justify-content: space-around;
             gap:0.5rem;
             opacity: 0;

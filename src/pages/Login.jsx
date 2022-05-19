@@ -120,7 +120,6 @@ const StyledLoginPage = styled.section`
 
 	to{
 		width: 40px;
-		transition: width 0.5s ease-out;
 	}
 }
 
@@ -140,7 +139,7 @@ h1::after{
 	bottom: -15px;
 	left: 50%;
 	margin-left: -15px;
-	animation: slideIn 1s
+	animation: slideIn 2s
 }
 
 button{
@@ -168,6 +167,19 @@ input {
 	margin-top: 5vh;
 }
 
+@media (min-width: ${({ theme }) => theme.lg}) {
+.container{
+	padding-left: 5rem;
+	padding-right: 5rem;
+	}
+}
+
+@media (min-width: ${({ theme }) => theme.xl}) {
+	.container{
+		padding-left: 10rem;
+		padding-right: 10rem;
+		}
+	}
 `
 
 export default Login

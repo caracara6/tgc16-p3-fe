@@ -20,19 +20,19 @@ function NavHeader() {
 
 
 					<NavLink to='/'>
-						<li className="nav__listitem">Home</li>
+						<li className="nav__listitem">HOME</li>
 					</NavLink>
 					<NavLink to='/about-us'>
-						<li className="nav__listitem">About Us</li>
+						<li className="nav__listitem">ABOUT US</li>
 					</NavLink>
-					<li className="nav__listitem">Complete Collections
+					<li className="nav__listitem">COMPLETE COLLECTIONS
 						<div className="nav__listitemdrop">
 
-							<NavLink to='/categories/all' onClick={() => { productContext.setSearchInput("") }}><ul>All Wines</ul></NavLink>
+							<NavLink to='/categories/all' onClick={() => { productContext.setSearchInput("") }}><ul>ALL WINES</ul></NavLink>
 
 							{
 								productContext.allCategories().length ? productContext.allCategories().map(c =>
-									<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => { productContext.setSearchInput(""); productContext.setLoaded(!productContext.getLoaded()) }}>{c.name}</Link></ul>) : null
+									<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => { productContext.setSearchInput(""); productContext.setLoaded(!productContext.getLoaded()); console.log('hello world') }}>{c.name.toUpperCase()}</Link></ul>) : null
 							}
 
 						</div>

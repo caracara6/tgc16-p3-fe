@@ -1,30 +1,111 @@
 import styled from 'styled-components'
 
 export const StyledProductListingsLayout = styled.div`
+@keyframes slideIn {
+	from{
+		width: 0;
+	}
+
+	to{
+		width: 40px;
+	}
+}
+
+@keyframes zoomIn{
+	from{
+
+	}
+	to{
+		transform: scale(1.5)
+	}
+}
+
 margin-top:15vh;
 display: flex;
-border: 2px solid green;
 flex-wrap: wrap;
+width: 100vw;
+
+.header{
+    width: 100vw;
+
+    img {
+        height: 50vh;
+        object-fit: cover;
+        animation: zoomIn 30s ease forwards;
+    }
+}
+
+.header-img-wrapper{
+    width: 100%;
+    overflow: hidden;
+}
 
 .filter-wrapper{
     flex-basis:100%;
-    
 }
 
 .w-100{
-    width:100%
+    width:100%;
 }
 
-.w-70{
-    width-70vw!important
+h2 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+h2::after{
+	content: "";
+	width: 40px;
+	height: 3px;
+	background-color: ${({ theme }) => theme.colours.dark};
+	position absolute;
+	bottom: -15px;
+	left: 50%;
+	margin-left: -15px;
+	animation: slideIn 2s
+}
+
+a{
+    text-decoration: none;
+    color: ${({theme}) => theme.colours.dark};
+}
+
+.filter-btn{
+    background-color: ${({theme}) => theme.colours.light};
+    border-radius: 0px;
+    border: none;
+    color: ${({theme}) => theme.colours.dark}
+}
+
+.dropdown button, .dropdown button:focus{
+    background-color: white;
+    color: ${({theme}) => theme.colours.dark};
+    border-radius: 0px;
+    border: 1px solid ${({theme}) => theme.colours.dark};
+}
+
+@media (min-width: ${({ theme }) => theme.md}) {
+    margin-top:5vh;
+    .card-body{
+        font-size: 1.2rem;
+    }
+
+    a{
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: ${({ theme }) => theme.lg}) {
+
+    .row:first-of-type {
+        margin-bottom: 4rem;
+    }
+
 }
 
 
-
-.off-canvas-start{
-    width: 70vw!important;
-    color: red;
-}
 `
 
 export const StyledSideFilter = styled.aside`
@@ -32,33 +113,38 @@ export const StyledSideFilter = styled.aside`
 flex: 1;
 
 margin-right: 1rem;
-border: 1px dotted red;
+margin-left: 2rem;
+padding-bottom: 3rem;
 display: none;
 
-div label input {
-    margin-right: 100px;
+h6{
+    font-size: 1rem;
 }
+
+h6:not(:first-of-type){
+    margin-top: 2rem;
+}
+
+// div label input {
+//     margin-right: 100px;
+// }
 
 .box{
     margin: 4px;
     border: 1px solid black;
-    overflow: hidden;
-    // float: left;
-    display: inline;
+    display: inline-block;
+    cursor: pointer;
 }
 
-.box label {
-    // float: left; 
-    line-height: 3.0em;
-    // width: 8.0em; 
-    height: 3.0em;
-    padding : 5px 10px;
+.box:hover{
+    cursor: pointer;
 }
 
 .box label span {
     text-align: center;
-    padding: 3px 0;
+    padding: 5px 8px;
     display: block;
+    font-size: 0.8rem;
 }
 
 .box label input {
@@ -67,20 +153,53 @@ div label input {
     color: #fff !important;
 }
 
-.box input:checked + span {
-    color: black;
-    text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
+.box input:checked + span::after{
+    position: relative;
+    content: 'x';
+    left: 10px;
+    // bottom: 12px;
+    color: lightgrey;
+    padding-right: 10px
 }
 
 
 @media (min-width: ${({ theme }) => theme.lg}) {
     display: block;
+
 }
+
+
 `
 
 export const StyledProductListings = styled.div`
 box-sizing: border-box;
 margin:auto;
 flex: 3;
-border: 1px dotted grey
+
+.col{
+    height: 65vh;
+}
+
+// @media (min-width: ${({ theme }) => theme.md}) {
+//     .col{
+//         height: 60vh;
+//     }
+// }
+
+@media (min-width: ${({ theme }) => theme.lg}) {
+    padding-right: 2rem;
+    .col{
+        height: 69vh;
+    }
+    
+}
+
+@media (min-width: ${({ theme }) => theme.xl}) {
+    .col{
+        height: 75vh;
+    }
+    
+}
+
+
 `

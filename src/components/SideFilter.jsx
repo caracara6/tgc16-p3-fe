@@ -2,7 +2,6 @@ import React from 'react'
 
 import { StyledSideFilter } from '../components/styles/ProductListings.styled'
 
-
 function SideFilter(props) {
 
 	// let [counter, setCounter] = useState(1)
@@ -58,7 +57,7 @@ function SideFilter(props) {
 	}
 
 	const handlePriceChange = (p) => {
-		if(props.priceRangeSelected === p){
+		if(props.priceRangeSelected.id === p.id){
 			props.setPriceRangeSelected({})
 		} else {
 			props.setPriceRangeSelected(p)
@@ -68,15 +67,17 @@ function SideFilter(props) {
 	return (
 
 		<StyledSideFilter >
-			<div>SideFilter</div>
 			{/* <h6>Regions</h6> */}
 			{props.uniqueRegions.length ?
 				(<React.Fragment>
-					<h6>Regions</h6>
+					<h6>REGION</h6>
 					{
 						props.uniqueRegions.map((r, i) => {
 							return <React.Fragment key={i}>
-								<div className='box'>
+								<div className='box' style={{
+                                                backgroundColor: props.regionSelected.includes(r) ? 'black' : 'white',
+                                                color: props.regionSelected.includes(r) ? 'white' : 'black',
+                                        }}>
 									<label>
 										<input type='checkbox'
 											value={r}
@@ -94,11 +95,14 @@ function SideFilter(props) {
 
 			{props.uniqueCountries.length ?
 				(<React.Fragment>
-					<h6>Countries</h6>
+					<h6>COUNTRY</h6>
 					{
 						props.uniqueCountries.map((c, i) => {
 							return <React.Fragment key={i}>
-								<div className='box'>
+								<div className='box' style={{
+                                                backgroundColor: props.countrySelected.includes(c) ? 'black' : 'white',
+                                                color: props.countrySelected.includes(c) ? 'white' : 'black',
+                                    }}>
 									<label>
 										<input type='checkbox'
 											value={c}
@@ -116,16 +120,19 @@ function SideFilter(props) {
 
 			{props.uniqueVintages.length ?
 				(<React.Fragment>
-					<h6>Vintage</h6>
+					<h6>VINTAGE</h6>
 					{
 						props.uniqueVintages.map((v, i) => {
 							return <React.Fragment key={i}>
-								<div className='box'>
+								<div className='box' style={{
+                                                backgroundColor: props.vintageSelected.includes(v.toString()) ? 'black' : 'white',
+                                                color: props.vintageSelected.includes(v.toString()) ? 'white' : 'black',
+                                    }}>
 									<label>
 										<input type='checkbox'
 											value={v}
 											onChange={updateVintageSelected}
-											checked = {props.vintageSelected.includes(v)}
+											checked = {props.vintageSelected.includes(v.toString())}
 										/>
 										<span>{v}</span>
 									</label>
@@ -136,11 +143,14 @@ function SideFilter(props) {
 				</React.Fragment>)
 				: null}
 
-			<h6>Price</h6>
+			<h6>PRICE</h6>
 			{
 				props.priceRange.map(p => {
 					return <React.Fragment key={p.id}>
-						<div className='box'>
+						<div className='box' style={{
+                                    backgroundColor: props.priceRangeSelected.id === p.id ? 'black' : 'white',
+                                    color: props.priceRangeSelected.id === p.id ? 'white' : 'black',
+                                    }}>
 							<label>
 								<input type='checkbox'
 								value={p.id}

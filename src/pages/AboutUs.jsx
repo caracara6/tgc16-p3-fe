@@ -5,20 +5,14 @@ import styled from 'styled-components'
 function AboutUs() {
     return (
         <StyledAboutUs>
-            <h1>About</h1>
-            <p>cinq à sept sank·ah·set sæŋk’e’set n : The time between late afternoon and early evening when streets are awash in the warm glow of the vanishing sun and anything is possible</p>
-            <p>Inspired by the hours between 5 and 7 p.m., when city streets are awash in the warm glow of the vanishing sun and office desks are abandoned for as-yet unknown possibilities, Cinq à Sept endeavours to capture the magical moments with our carefully-curated wine collection.
-
-
-                Established in 2020. An unexpected year. A year in which we had to adapt and think of new ways of doing things. And as if the year was not difficult enough, Jason & Jan decided to launch their wine venture.
-
-                Both being wine lovers, for the longest time we have been talking about opportunities in the market in Singapore. At some point we said: “instead of talking about distributing wine, let’s just do it”.
-
-                We did evaluate whether Singapore needs another wine retailer. And our conclusion is that there is space for one that focuses on boutique wineries, on wineries that produce with a keen eye on a sustainable growth and production process, on winemakers who have a story to tell, all leading to high quality wines – to stellar wines.
-
-                Stellar Wine Company distributes wines from around the globe, rated a minimum of 90 Robert Parker points (with a few exceptions of our most promising ones that are not rated yet or almost reach 90 points, but where we believe in the quality and story). Despite those high ratings, we want to keep the price point accessible so we can share these gems with you.
-
-                We aim to surprise you with good value, great service and stellar wines.
+            <h1>Our Story</h1>
+            <p>cinq à sept sank·ah·set sæŋk’e’set n : The time between late afternoon and early evening when streets are awash in the warm glow of the vanishing sun and anything is possible.</p>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic esse maxime recusandae aut a nisi nesciunt at. 
+                Deleniti quo reprehenderit quas error veritatis natus nulla fugiat. Nostrum similique soluta quas. 
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                Commodi error officia id omnis labore consectetur dolores dignissimos mollitia saepe quaerat totam, 
+                magni dicta possimus maxime natus corporis magnam iste quibusdam!
             </p>
         </StyledAboutUs>
 
@@ -26,7 +20,18 @@ function AboutUs() {
 }
 
 const StyledAboutUs = styled.section`
+margin-top: 15vh;
 border: 1px solid red;
+padding: 0 2rem 0;
+
+@media (min-width: ${({ theme }) => theme.md}){
+    margin-top: 5vh;
+    padding: 0 3rem 0;
+}
+
+@media (min-width: ${({ theme }) => theme.lg}){
+    padding: 0 10vw 0;
+}
 
 
 `

@@ -41,7 +41,7 @@ function CartProvider(props) {
                     let responseAddToCart = await addToCart(product.id, quantity)
 
                     setCartItems(await getCart())
-
+                    
                     return responseAddToCart
                 } catch (e) {
                     console.log(e)
@@ -186,7 +186,6 @@ function CartProvider(props) {
             localStorage.setItem(`loggedInCart`, JSON.stringify(cartItems))
         } else {
             //if guest user
-            // if (cartItems !== []) {
 
             if (cartItems.length > 0) {
 
@@ -201,9 +200,7 @@ function CartProvider(props) {
                 // console.log(cartItems)
                 setCartItems(cartItems)
             }
-            // else {
-            //     localStorage.removeItem('cartItems')
-            // }
+
         }
     }, [cartItems])
 
