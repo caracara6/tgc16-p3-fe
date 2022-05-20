@@ -5,6 +5,8 @@
  * Diploma in Web Application Development
  * Project 3
 
+<img src='./public/CAS-responsive.jpg' style='display:block'/>
+<br>
 
 The live demo can be found at [https://cinq-a-sept.netlify.app](https://cinq-a-sept.netlify.app/).
 
