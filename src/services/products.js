@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
-const BASE_API_URL = "http://localhost:8080/api"
+const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
+// const BASE_API_URL = "http://localhost:8080/api"
 
 
 export async function getCategories() {
