@@ -10,6 +10,10 @@
 
 The live demo can be found at [https://cinq-a-sept.netlify.app](https://cinq-a-sept.netlify.app/).
 
+Test Account | Password
+------------ | -------------------
+chanchinchin6@gmail.com | password
+
 Backend repository is [here](https://github.com/caracara6/tgc16-p3-be).
 
 ## Summary
