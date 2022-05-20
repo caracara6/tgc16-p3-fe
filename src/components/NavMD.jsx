@@ -10,8 +10,11 @@ import { NavLink, Link } from 'react-router-dom'
 
 function NavHeader() {
 
-	let productContext = useContext(ProductContext);
+	const productContext = useContext(ProductContext);
+	function printCat(){
 
+		console.log('==========', productContext.allCategories())
+	}
 	return (
 		<React.Fragment>
 
@@ -28,8 +31,9 @@ function NavHeader() {
 					<li className="nav__listitem">COMPLETE COLLECTIONS
 						<div className="nav__listitemdrop">
 
-							<NavLink to='/categories/all' onClick={() => { productContext.setSearchInput("") }}><ul>ALL WINES</ul></NavLink>
-
+							<Link to='/categories/all' onClick={() => { productContext.setSearchInput("") }}><ul>ALL WINES</ul></Link>
+							{/* <div>{JSON.stringify(productContext.allCategories())}</div> */}
+							{printCat()}
 							{
 								productContext.allCategories().length ? productContext.allCategories().map(c =>
 									<ul key={c.id}><Link to={"/categories/" + c.id} onClick={() => { productContext.setSearchInput(""); productContext.setLoaded(!productContext.getLoaded()); console.log('hello world') }}>{c.name.toUpperCase()}</Link></ul>) : null

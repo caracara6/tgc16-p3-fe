@@ -1,8 +1,8 @@
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 
-const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
-// const BASE_API_URL = "http://localhost:8080"
+// const BASE_API_URL = "https://cccc-tgc16-p3-api2.herokuapp.com/api"
+const BASE_API_URL = "http://localhost:8080/api"
 
 
 export async function userLogin(email, password) {
@@ -20,7 +20,9 @@ export async function userLogin(email, password) {
         }
     } catch (e) {
         // console.log(e.response.data.error)
-        return e.response.data.error
+        return e.response.data
+        // return e.response.data.error
+
     }
 }
 

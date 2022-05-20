@@ -14,7 +14,6 @@ const GlobalStyles = createGlobalStyle`
     outline: none !important;
     box-shadow: none !important;
 	font-family: 'Montserrat', sans-serif;
-
     // overflow-x: hidden;
 }
 
@@ -27,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
 
 .main-content {
 	flex: 1;
+	width: 100vw;
 }
 
 

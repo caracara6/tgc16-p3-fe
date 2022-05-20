@@ -45,11 +45,6 @@ function ProductListings() {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	// useEffect(() => {
-	// 	setProducts(productContext.allProducts())
-
-	// }, [productContext.allProducts()])
-
 	let headersArr = [
 		{
 			id: 'all',

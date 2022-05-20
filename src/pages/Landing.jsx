@@ -132,7 +132,7 @@ h3::after{
 	padding: 0.5rem 1rem;
 	background-color: ${({ theme }) => theme.colours.dark};
 	color: white;
-	right: -30px
+	right: -78px
 }
 
 
